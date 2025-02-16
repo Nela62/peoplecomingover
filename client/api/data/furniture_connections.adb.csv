@@ -1,0 +1,7 @@
+ConnectionClass,_Image@id,Category@Name,connection_id,constraint_connection_id
+HasCategory,lt-001,lighting,lt-001_lighting,lt-001_lighting
+HasCategory,lt-002,lighting,lt-002_lighting,lt-002_lighting
+HasCategory,art-001,wall_decor,art-001_wall_decor,art-001_wall_decor
+HasCategory,st-001,storage,st-001_storage,st-001_storage
+HasCategory,ch-001,seating,ch-001_seating,ch-001_seating
+HasCategory,art-002,wall_decor,art-002_wall_decor,art-002_wall_decor

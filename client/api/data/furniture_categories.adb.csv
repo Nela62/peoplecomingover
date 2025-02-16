@@ -1,0 +1,5 @@
+EntityClass,Name,category,constraint_Name
+Category,lighting,lighting,lighting
+Category,wall_decor,wall_decor,wall_decor
+Category,storage,storage,storage
+Category,seating,seating,seating
