@@ -7,7 +7,7 @@ import { Markdown } from "./markdown";
 import { PreviewAttachment } from "./preview-attachment";
 import { cn } from "@/lib/utils";
 import { Weather } from "./weather";
-import { Message } from "./chat";
+import { isImageContent, isTextContent, Message } from "./chat";
 
 export const PreviewMessage = ({
   message,
@@ -40,7 +40,7 @@ export const PreviewMessage = ({
               <Markdown>
                 {Array.isArray(message.content)
                   ? message.content
-                      .filter((content) => content.type === "text")
+                      .filter(isTextContent)
                       .map((content) => content.text)
                       .join("")
                   : message.content}
@@ -82,18 +82,16 @@ export const PreviewMessage = ({
 
           {message.content && Array.isArray(message.content) && (
             <div className="flex flex-row gap-2">
-              {message.content
-                .filter((content) => content.type === "image_url")
-                .map((attachment) => (
-                  <PreviewAttachment
-                    key={attachment.image_url.name}
-                    attachment={{
-                      name: attachment.image_url.name,
-                      url: attachment.image_url.url,
-                      contentType: "image/png",
-                    }}
-                  />
-                ))}
+              {message.content.filter(isImageContent).map((attachment) => (
+                <PreviewAttachment
+                  key={attachment.image_url.name}
+                  attachment={{
+                    name: attachment.image_url.name,
+                    url: attachment.image_url.url,
+                    contentType: "image/png",
+                  }}
+                />
+              ))}
             </div>
           )}
         </div>

@@ -31,6 +31,12 @@ export type Message = {
   toolInvocations?: ToolInvocation[];
 };
 
+export const isTextContent = (content: Content): content is TextContent =>
+  content.type === "text";
+
+export const isImageContent = (content: Content): content is ImageContent =>
+  content.type === "image_url";
+
 export function Chat() {
   const chatId = "001";
 
@@ -100,6 +106,7 @@ export function Chat() {
     setFiles([]);
 
     try {
+      console.log("updatedMessages", updatedMessages);
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         headers: {
