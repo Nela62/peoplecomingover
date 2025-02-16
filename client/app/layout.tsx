@@ -2,8 +2,8 @@ import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
-import { Navbar } from "@/client/components/navbar";
-import StytchProvider from "@/client/components/StytchProvider";
+import { Navbar } from "@/components/navbar";
+import StytchProvider from "@/components/StytchProvider";
 
 export const metadata = {
   title: "AI SDK Python Streaming Preview",
@@ -37,7 +37,6 @@ export default function RootLayout({
         <head></head>
         <body className={cn(GeistSans.className, "antialiased")}>
           <Toaster position="top-center" richColors />
-          <Navbar />
           {children}
         </body>
       </html>

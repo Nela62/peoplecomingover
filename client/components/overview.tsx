@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 import { MessageIcon } from "./icons";
-import { LogoPython } from "@/client/app/icons";
+import { LogoPython } from "@/app/icons";
 
 export const Overview = () => {
   return (
     <motion.div
       key="overview"
-      className="max-w-3xl mx-auto md:mt-20"
+      className="max-w-4xl mx-auto md:mt-20"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}

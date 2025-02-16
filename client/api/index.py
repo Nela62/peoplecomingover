@@ -19,6 +19,9 @@ from llama_index.core.base.llms.types import (
     TextBlock,
 )
 
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext
+from llama_index.vector_stores.ApertureDB import ApertureDBVectorStore
+
 from fastapi.middleware.cors import CORSMiddleware
 
 # Configure CORS
@@ -33,7 +36,7 @@ origins = [
 load_dotenv(".env.local")
 
 llm = SambaNovaCloud(
-    model="Llama-3.2-90B-Vision-Instruct",
+    model="Llama-3.2-11B-Vision-Instruct",
     context_window=100000,
     max_tokens=1024,
     temperature=0.7,
@@ -54,9 +57,9 @@ app.add_middleware(
 )
 
 
-client = OpenAI(
-    base_url="https://api.sambanova.ai/v1", api_key=os.environ.get("SAMBANOVA_API_KEY")
-)
+# client = OpenAI(
+#     base_url="https://api.sambanova.ai/v1", api_key=os.environ.get("SAMBANOVA_API_KEY")
+# )
 
 
 class Request(BaseModel):
@@ -210,43 +213,51 @@ async def handle_chat_data(
     messages_data = req.messages
     print("messages_data", messages_data)
 
-    # messages = []
-    # for msg in messages_data:
-    #     role_str = msg.get("role", "user").lower()
-    #     if role_str == "system":
-    #         role = MessageRole.SYSTEM
-    #     elif role_str == "assistant":
-    #         role = MessageRole.ASSISTANT
-    #     else:
-    #         role = MessageRole.USER
+    messages = []
+    for msg in messages_data:
+        role_str = msg.get("role", "user").lower()
+        if role_str == "system":
+            role = MessageRole.SYSTEM
+        elif role_str == "assistant":
+            role = MessageRole.ASSISTANT
+        else:
+            role = MessageRole.USER
 
-    #     content = msg.get("content", "")
-    #     messages.append(ChatMessage(role=role, content=content))
-    # # If content is a list, we assume it’s a list of blocks
-    # if isinstance(content, list):
-    #     blocks = []
-    #     for block in content:
-    #         block_type = block.get("type")
-    #         if block_type == "text":
-    #             blocks.append(TextBlock(text=block.get("text", "")))
-    #         elif block_type == "image_url":
-    #             # Assumes your client sends something like { type: "image_url", image_url: { name, url } }
-    #             image_data = block.get("image_url", {})
-    #             blocks.append(ImageBlock(url=image_data.get("url", "")))
-    #     messages.append(ChatMessage(role=role, blocks=blocks))
-    # else:
-    #     messages.append(ChatMessage(role=role, content=content))
+        content = msg.get("content", "")
+        messages.append(ChatMessage(role=role, content=content))
+    # If content is a list, we assume it’s a list of blocks
+    if isinstance(content, list):
+        blocks = []
+        for block in content:
+            block_type = block.get("type")
+            if block_type == "text":
+                blocks.append(TextBlock(text=block.get("text", "")))
+            elif block_type == "image_url":
+                # Assumes your client sends something like { type: "image_url", image_url: { name, url } }
+                image_data = block.get("image_url", {})
+                blocks.append(ImageBlock(url=image_data.get("url", "")))
+        messages.append(ChatMessage(role=role, blocks=blocks))
+    else:
+        messages.append(ChatMessage(role=role, content=content))
 
     # TODO: add structured output here to output both the assistant's response and the parameters for the tool call - store search
     # TODO: It's erroring out when I add the system message
     system_message = "The user will post a picture of their room. Rate their room as if their girlfriend or their friends is coming over and they don't want to embarrass her. Do not mention the girlfriend, just mention what the user should add / remove, include any types of furniture worth buying. You can mention any mismatched furniture that the user should get rid of and get something new instead. Give the room a rating out of 10."
 
-    response = client.chat.completions.create(
-        model="Llama-3.2-90B-Vision-Instruct",
-        messages=messages_data,
-    )
+    # response = client.chat.completions.create(
+    #     model="Llama-3.2-90B-Vision-Instruct",
+    #     messages=messages_data,
+    # )
+
+    adb_client = ApertureDBVectorStore(dimensions=1536)
+    storage_context = StorageContext.from_defaults(vector_store=adb_client)
+
+    documents = SimpleDirectoryReader("data").load_data()
+    index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
+
+    query_engine = index.as_query_engine()
 
     # Use the SambaNova model to get a chat response
-    # ai_msg = llm.chat(messages)
-    # return ChatResponse(answer=ai_msg.message.content)
-    return ChatResponse(role="assistant", content=response.choices[0].message.content)
+    ai_msg = llm.chat(messages)
+    return ChatResponse(answer=ai_msg.message.content)
+    # return ChatResponse(role="assistant", content=response.choices[0].message.content)
