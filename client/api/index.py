@@ -208,6 +208,7 @@ async def handle_chat_data(
     # response.headers["x-vercel-ai-data-stream"] = "v1"
     # return response
     messages_data = req.messages
+    print("messages_data", messages_data)
 
     # messages = []
     # for msg in messages_data:
@@ -244,8 +245,6 @@ async def handle_chat_data(
         model="Llama-3.2-90B-Vision-Instruct",
         messages=messages_data,
     )
-
-    print("response", response)
 
     # Use the SambaNova model to get a chat response
     # ai_msg = llm.chat(messages)

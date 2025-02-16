@@ -1,8 +1,8 @@
 "use client";
 
-import { PreviewMessage, ThinkingMessage } from "@/components/message";
-import { MultimodalInput } from "@/components/multimodal-input";
-import { Overview } from "@/components/overview";
+import { PreviewMessage, ThinkingMessage } from "@/client/components/message";
+import { MultimodalInput } from "@/client/components/multimodal-input";
+import { Overview } from "@/client/components/overview";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { ToolInvocation } from "ai";
 import { useChat } from "ai/react";
@@ -39,13 +39,7 @@ type Product = {
 };
 
 type ShopResponse = {
-  analysis: {
-    text: string;
-    cleanup_tasks: string[];
-  };
-  recommendations: {
-    [category: string]: Product[];
-  };
+  [category: string]: Product[];
 };
 
 type Content = TextContent | ImageContent;
@@ -64,10 +58,24 @@ export const isTextContent = (content: Content): content is TextContent =>
 export const isImageContent = (content: Content): content is ImageContent =>
   content.type === "image_url";
 
+const sampleMessages: Message[] = [
+  {
+    id: "1",
+    role: "user",
+    content: "I need help with my room",
+  },
+  {
+    id: "2",
+    role: "assistant",
+    content:
+      "Looking at your room, I'd rate it a 6/10 - it has good potential but needs some thoughtful touches!",
+  },
+];
+
 export function Chat() {
   const chatId = "001";
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(sampleMessages);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
   const [files, setFiles] = useState<File[]>([]);
