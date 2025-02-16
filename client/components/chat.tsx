@@ -63,13 +63,18 @@ const sampleMessages: Message[] = [
   {
     id: "1",
     role: "user",
-    content: "I need help with my room",
+    content: [{
+      type: "text",
+      text: "I need help with my room"
+    }],
   },
   {
     id: "2",
     role: "assistant",
-    content:
-      "Looking at your room, I'd rate it a 6/10 - it has good potential but needs some thoughtful touches! \n\nHere's what's working well:\n- Great natural light from yo windows\n- Good room size\n- Nice hardwood floors\n\nTo elevate the space and make it more inviting, I'd recommend:\n1. The bed area looks a bit messy - let's make it the focal point with new bedding and proper pillows\n2. The blank wall across from your bed is perfect for some artwork to add personality\n3. You're missing ambient lighting - relying on just the ceiling light can feel harsh\n4. A small seating area would give guests a comfortable place sit besides the bed\n\nAdditionally, consider these cleanup tasks:\n- Make the bed with fresh sheets\n- Clear floor clutter\n- Organize visible cables\n- Add a hamper for dirty clothes\n\nI've selected some pieces that would transform your space: ",
+    content: [{
+      type: "text",
+      text: "Looking at your room, I'd rate it a 6/10 - it has good potential but needs some thoughtful touches! \n\nHere's what's working well:\n- Great natural light from yo windows\n- Good room size\n- Nice hardwood floors\n\nTo elevate the space and make it more inviting, I'd recommend:\n1. The bed area looks a bit messy - let's make it the focal point with new bedding and proper pillows\n2. The blank wall across from your bed is perfect for some artwork to add personality\n3. You're missing ambient lighting - relying on just the ceiling light can feel harsh\n4. A small seating area would give guests a comfortable place sit besides the bed\n\nAdditionally, consider these cleanup tasks:\n- Make the bed with fresh sheets\n- Clear floor clutter\n- Organize visible cables\n- Add a hamper for dirty clothes\n\nI've selected some pieces that would transform your space: "
+    }],
     shopResponse: {
       bedding: [
         {
