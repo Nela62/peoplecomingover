@@ -1,8 +1,8 @@
 "use client";
 
-import { PreviewMessage, ThinkingMessage } from "@/client/components/message";
-import { MultimodalInput } from "@/client/components/multimodal-input";
-import { Overview } from "@/client/components/overview";
+import { PreviewMessage, ThinkingMessage } from "@/components/message";
+import { MultimodalInput } from "@/components/multimodal-input";
+import { Overview } from "@/components/overview";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { ToolInvocation } from "ai";
 import { useChat } from "ai/react";
@@ -58,6 +58,7 @@ export const isTextContent = (content: Content): content is TextContent =>
 export const isImageContent = (content: Content): content is ImageContent =>
   content.type === "image_url";
 
+
 const sampleMessages: Message[] = [
   {
     id: "1",
@@ -68,7 +69,98 @@ const sampleMessages: Message[] = [
     id: "2",
     role: "assistant",
     content:
-      "Looking at your room, I'd rate it a 6/10 - it has good potential but needs some thoughtful touches!",
+      "Looking at your room, I'd rate it a 6/10 - it has good potential but needs some thoughtful touches! \n\nHere's what's working well:\n- Great natural light from yo windows\n- Good room size\n- Nice hardwood floors\n\nTo elevate the space and make it more inviting, I'd recommend:\n1. The bed area looks a bit messy - let's make it the focal point with new bedding and proper pillows\n2. The blank wall across from your bed is perfect for some artwork to add personality\n3. You're missing ambient lighting - relying on just the ceiling light can feel harsh\n4. A small seating area would give guests a comfortable place sit besides the bed\n\nAdditionally, consider these cleanup tasks:\n- Make the bed with fresh sheets\n- Clear floor clutter\n- Organize visible cables\n- Add a hamper for dirty clothes\n\nI've selected some pieces that would transform your space: ",
+    shopResponse: {
+      bedding: [
+        {
+          id: "bd-001",
+          name: "Hotel Collection Duvet Set",
+          description:
+            "Crisp, hotel-quality cotton bedding that feels luxurious and looks sharp. Perfect for creating that put-together look.",
+          price: 189.99,
+          image_url: "https://example.com/images/bedding-001.jpg",
+          placement: "On your bed - the white will brighten the room and look clean and fresh",
+          // available_sizes: ["Twin", "Full", "Queen", "King"],
+          color_options: ["Crisp White", "Soft Gray", "Navy"],
+        },
+      ],
+     "seating": [
+       {
+         "id": "ch-001",
+         "name": "Modern Accent Chair",
+         "description": "Comfortable yet stylish chair that provides extra seating without taking up too much space",
+         "price": 299.99,
+         "image_url": "https://example.com/images/chair-001.jpg",
+         "placement": "In the corner near the window - creates a nice reading nook and gives
+ guests a place to sit",
+         "dimensions": {
+           "width": 70,
+           "height": 85,
+           "depth": 75,
+           "unit": "cm"
+         },
+         "color_options": ["Gray Velvet", "Navy Blue", "Forest Green"]
+       }
+     ],
+     "lighting": [
+       {
+         "id": "lt-001",
+         "name": "Floor Lamp with Fabric Shade",
+         "description": "Warm, dimmable lighting that creates a cozy atmosphere",
+         "price": 129.99,
+         "image_url": "https://example.com/images/lamp-001.jpg",
+         "placement": "Next to the accent chair - perfect for reading or creating ambient
+ lighting",
+         "color_options": ["Black/White Shade", "Brass/Beige Shade"]
+       },
+       {
+         "id": "lt-002",
+         "name": "String Lights",
+         "description": "Warm white LED string lights to add a magical touch",
+         "price": 29.99,
+         "image_url": "https://example.com/images/lights-002.jpg",
+         "placement": "Along the headboard or window - creates a warm, inviting atmosphere",
+         "features": [
+           "USB powered",
+           "Remote controlled",
+           "Multiple light modes"
+         ]
+       }
+     ],
+     "wall_decor": [
+       {
+         "id": "art-001",
+         "name": "Abstract Canvas Print Set",
+         "description": "Set of 3 coordinating abstract prints that add color and interest",
+         "price": 159.99,
+         "image_url": "https://example.com/images/art-001.jpg",
+         "placement": "On the blank wall across from your bed - creates a focal point and add
+ personality",
+         "dimensions": {
+           "width": 40,
+           "height": 60,
+           "unit": "cm"
+         },
+         "style_options": ["Blue/Gray Abstract", "Earth Tones", "Black/White"]
+       }
+     ],
+     "storage": [
+       {
+         "id": "st-001",
+         "name": "Sleek Hamper with Lid",
+         "description": "Modern hamper that keeps laundry out of sight",
+         "price": 45.99,
+         "image_url": "https://example.com/images/hamper-001.jpg",
+         "placement": "In the corner near your closet",
+         "features": [
+           "Removable liner",
+           "Ventilated design",
+           "Magnetic lid closure"
+         ],
+         "color_options": ["White", "Gray", "Black"]
+       }
+     ]
+   }
   },
 ];
 
