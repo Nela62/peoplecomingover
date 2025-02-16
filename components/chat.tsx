@@ -6,30 +6,53 @@ import { Overview } from "@/components/overview";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { ToolInvocation } from "ai";
 import { useChat } from "ai/react";
+import { useState } from "react";
 import { toast } from "sonner";
+
+export type Message = {
+  id: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+};
 
 export function Chat() {
   const chatId = "001";
 
-  const {
-    messages,
-    setMessages,
-    handleSubmit,
-    input,
-    setInput,
-    append,
-    isLoading,
-    stop,
-  } = useChat({
-    maxSteps: 4,
-    onError: (error) => {
-      if (error.message.includes("Too many requests")) {
-        toast.error(
-          "You are sending too many messages. Please try again later.",
-        );
-      }
-    },
-  });
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState("");
+
+  const handleSubmit = async (event?: { preventDefault?: () => void }) => {
+    setIsLoading(true);
+    const id = crypto.randomUUID();
+    setMessages((messages) => [
+      ...messages,
+      { id, role: "user", content: input },
+    ]);
+    setInput("");
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: [...messages, { id, role: "user", content: input }],
+      }),
+    });
+    const data = await response.json();
+    console.log("data", data);
+    setMessages([
+      ...messages,
+      { id: crypto.randomUUID(), role: "assistant", content: data.content },
+    ]);
+    setIsLoading(false);
+  };
+
+  const append = (message: Message) => {
+    setMessages((messages) => [...messages, message]);
+    handleSubmit();
+    return Promise.resolve(null);
+  };
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
@@ -68,7 +91,7 @@ export function Chat() {
           setInput={setInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
-          stop={stop}
+          // stop={stop}
           messages={messages}
           setMessages={setMessages}
           append={append}

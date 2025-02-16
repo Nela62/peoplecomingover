@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChatRequestOptions, CreateMessage, Message } from "ai";
+// import type { ChatRequestOptions, CreateMessage,  } from "ai";
 import { motion } from "framer-motion";
 import type React from "react";
 import {
@@ -18,6 +18,7 @@ import { cn, sanitizeUIMessages } from "@/lib/utils";
 import { ArrowUpIcon, StopIcon } from "./icons";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { Message } from "./chat";
 
 const suggestedActions = [
   {
@@ -37,7 +38,7 @@ export function MultimodalInput({
   input,
   setInput,
   isLoading,
-  stop,
+  // stop,
   messages,
   setMessages,
   append,
@@ -48,19 +49,11 @@ export function MultimodalInput({
   input: string;
   setInput: (value: string) => void;
   isLoading: boolean;
-  stop: () => void;
+  // stop: () => void;
   messages: Array<Message>;
   setMessages: Dispatch<SetStateAction<Array<Message>>>;
-  append: (
-    message: Message | CreateMessage,
-    chatRequestOptions?: ChatRequestOptions,
-  ) => Promise<string | null | undefined>;
-  handleSubmit: (
-    event?: {
-      preventDefault?: () => void;
-    },
-    chatRequestOptions?: ChatRequestOptions,
-  ) => void;
+  append: (message: Message) => Promise<string | null | undefined>;
+  handleSubmit: (event?: { preventDefault?: () => void }) => void;
   className?: string;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -75,13 +68,15 @@ export function MultimodalInput({
   const adjustHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 2}px`;
+      textareaRef.current.style.height = `${
+        textareaRef.current.scrollHeight + 2
+      }px`;
     }
   };
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     "input",
-    "",
+    ""
   );
 
   useEffect(() => {
@@ -106,7 +101,7 @@ export function MultimodalInput({
   };
 
   const submitForm = useCallback(() => {
-    handleSubmit(undefined, {});
+    handleSubmit(undefined);
     setLocalStorageInput("");
 
     if (width && width > 768) {
@@ -131,6 +126,7 @@ export function MultimodalInput({
                 variant="ghost"
                 onClick={async () => {
                   append({
+                    id: crypto.randomUUID(),
                     role: "user",
                     content: suggestedAction.action,
                   });
@@ -154,7 +150,7 @@ export function MultimodalInput({
         onChange={handleInput}
         className={cn(
           "min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-xl !text-base bg-muted",
-          className,
+          className
         )}
         rows={3}
         autoFocus
@@ -177,7 +173,7 @@ export function MultimodalInput({
           onClick={(event) => {
             event.preventDefault();
             stop();
-            setMessages((messages) => sanitizeUIMessages(messages));
+            // setMessages((messages) => sanitizeUIMessages(messages));
           }}
         >
           <StopIcon size={14} />
