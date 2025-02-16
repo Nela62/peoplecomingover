@@ -37,9 +37,8 @@ export function ProductCard({
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-lg">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-medium text-sm">{name}</h3>
+      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-2xl">
+        <div className="flex justify-end">
           <Button
             variant="ghost"
             size="sm"
@@ -70,9 +69,12 @@ export function ProductCard({
             className="object-cover w-full h-full"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex justify-between items-center mt-2">
-            <p className="font-medium">${price.toFixed(2)}</p>
+        <div className="flex flex-col gap-1 mt-2">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-medium text-sm">{name}</h3>
+              <p className="font-medium mt-1">${price.toFixed(2)}</p>
+            </div>
             <Button size="sm" onClick={handleOrder}>
               Add to Cart
             </Button>
