@@ -1,66 +1,98 @@
 ---
 ---
 <form class="purchase-form">
-    <h2>Buy Now</h2>
-    <div class="form-group">
-      Credit Card Number:
-      <input type="text" placeholder="Enter card number" />
+    <h2>Payment Information</h2>
+    <div class="form-section">
+      <div class="form-group">
+        <label for="cardNumber">Credit Card Number</label>
+        <input type="text" id="cardNumber" placeholder="Enter card number" />
+      </div>
+      <div class="form-group inline-group">
+        <div>
+          <label for="expDate">Expiration Date</label>
+          <input type="text" id="expDate" placeholder="MM/YY" />
+        </div>
+        <div>
+          <label for="cvc">CVC</label>
+          <input type="text" id="cvc" placeholder="CVC" />
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      Expiration Date:
-      <input type="text" placeholder="MM/YY" />
+
+    <div class="form-section">
+      <h2>Shipping Address</h2>
+      <div class="form-group">
+        <label for="billingAddress">Billing Address</label>
+        <textarea id="billingAddress" placeholder="Street Address, City, State, Zip"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="shippingAddress">Shipping Address</label>
+        <textarea id="shippingAddress" placeholder="Street Address, City, State, Zip"></textarea>
+      </div>
     </div>
-    <div class="form-group">
-      CVC:
-      <input type="text" placeholder="CVC" />
-    </div>
-    <div class="form-group">
-      Billing Address:
-      <input type="text" placeholder="Street Address, City, State, Zip" />
-    </div>
-    <div class="form-group">
-      Shipping Address:
-      <input type="text" placeholder="Street Address, City, State, Zip" />
-    </div>
+
     <button type="submit">Buy Now</button>
   </form>
 
 <style>
     /* Purchase form styling */
     .purchase-form {
-      margin-top: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      max-width: 600px;
-    }
-    .purchase-form {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem; /* Increased gap */
       max-width: 600px;
       padding: 2rem;
-      border: 1px solid #ddd;
       border-radius: 8px;
       background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-family: sans-serif; /* Set a default font */
     }
+
+    .form-section {
+      margin-bottom: 1.5rem; /* Space between sections */
+    }
+
+    .form-section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
     .purchase-form .form-group {
       display: flex;
       flex-direction: column;
       font-size: 0.9rem;
-      color: #333;
-      margin-bottom: 1rem;
+      color: #555; /* Darker label color */
+      margin-bottom: 0.75rem; /* Slightly reduced spacing within groups */
     }
+
+    .purchase-form label {
+      font-weight: bold; /* Make labels a bit bolder */
+      margin-bottom: 0.3rem; /* Space between label and input */
+    }
+
     .purchase-form input {
-      padding: 0.75rem;
-      margin-top: 0.25rem;
+      padding: 0.8rem; /* Slightly more padding */
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1rem; /* Input text size */
+      color: #333; /* Input text color */
+    }
+
+    .purchase-form textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #333;
+      min-height: 80px; /* Minimum height for textarea */
     }
     .purchase-form button { /* Keep button styles as they are or adjust as needed */
       padding: 0.75rem 1.5rem; /* Slightly increased padding */
       font-size: 1rem; /* Slightly larger font size */
+    }
+    .inline-group {
+      display: flex;
+      gap: 1rem; /* Space between inline inputs */
     }
   </style>
