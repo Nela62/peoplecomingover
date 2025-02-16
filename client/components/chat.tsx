@@ -168,7 +168,7 @@ const sampleMessages: Message[] = [
 export function Chat() {
   const chatId = "001";
 
-  const [messages, setMessages] = useState<Message[]>(sampleMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -233,24 +233,75 @@ export function Chat() {
     setInput("");
     setFiles([]);
 
+    // Random delay between 2-4 seconds
+    const delay = Math.floor(Math.random() * 2000) + 4000;
+
+    // Handle scripted responses
+    setTimeout(async () => {
+      let assistantResponse: Message;
+
+      if (input.toLowerCase().includes("rate my room")) {
+        assistantResponse = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: `The image shows a bedroom with a bed, desk, chair, and bookshelf. The room
+ is small and cozy, with a single bed against one wall and a desk and chair against another.
+ Bookshelf is located in the corner of the room, and a window with white curtains is visible
+ the back wall.
+
+ To improve the comfort and functionality of the room, here are some suggestions:\n 1. Add a comfortable reading chair near the bookshelf to create a cozy reading nook.\n2. Place a floor lamp beside the reading chair for soft lighting and a warm ambiance.\n3. Hang a piece of artwork or a framed print above the bed or desk to personalize the space.\n4. Add a plant on the desk or bookshelf for a refreshing touch of greenery.\n5. Use a comfortable throw blanket to add both warmth and texture to the room.`,
+        };
+      } else if (input.toLowerCase().includes("art")) {
+        assistantResponse = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "I recommend 'The Artist's Garden at Giverny' by Claude Monet. This masterpiece captures the serene beauty of Monet's garden with vibrant colors and impressionistic style. It would add a peaceful atmosphere to your room. The price is $450 for a high-quality reproduction.",
+        };
+      } else if (input.toLowerCase().includes("buy")) {
+        assistantResponse = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "To proceed with the purchase of 'The Artist's Garden at Giverny', I'll need your card information. Please provide your card number, expiration date, and CVV.",
+        };
+      } else if (input.includes("card")) {
+        assistantResponse = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "Thank you for your purchase! Your order has been confirmed. Tracking number is TR-2024-89321. Expected delivery: 5-7 business days. You'll receive an email confirmation shortly.",
+        };
+      } else {
+        assistantResponse = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "I'm not sure how to respond to that. Could you please clarify your question?",
+        };
+      }
+
+      setMessages((prevMessages) => [...prevMessages, assistantResponse]);
+      setIsLoading(false);
+    }, delay);
+
     try {
-      console.log("updatedMessages", updatedMessages);
-      const response = await fetch("http://localhost:8000/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messages: updatedMessages }),
-      });
-      const data = await response.json();
-      setMessages([
-        ...updatedMessages,
-        { id: crypto.randomUUID(), role: "assistant", content: data.content },
-      ]);
+      // const response = await fetch("http://localhost:8000/api/chat", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ messages: updatedMessages }),
+      // });
+      // const data = await response.json();
+      // setMessages([
+      //   ...updatedMessages,
+      //   { id: crypto.randomUUID(), role: "assistant", content: data.content },
+      // ]);
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
