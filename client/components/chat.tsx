@@ -96,8 +96,7 @@ const sampleMessages: Message[] = [
          "description": "Comfortable yet stylish chair that provides extra seating without taking up too much space",
          "price": 299.99,
          "image_url": "https://example.com/images/chair-001.jpg",
-         "placement": "In the corner near the window - creates a nice reading nook and gives
- guests a place to sit",
+         "placement": "In the corner near the window - creates a nice reading nook and gives guests a place to sit",
          "dimensions": {
            "width": 70,
            "height": 85,
@@ -114,8 +113,7 @@ const sampleMessages: Message[] = [
          "description": "Warm, dimmable lighting that creates a cozy atmosphere",
          "price": 129.99,
          "image_url": "https://example.com/images/lamp-001.jpg",
-         "placement": "Next to the accent chair - perfect for reading or creating ambient
- lighting",
+         "placement": "Next to the accent chair - perfect for reading or creating ambient lighting",
          "color_options": ["Black/White Shade", "Brass/Beige Shade"]
        },
        {
@@ -139,8 +137,7 @@ const sampleMessages: Message[] = [
          "description": "Set of 3 coordinating abstract prints that add color and interest",
          "price": 159.99,
          "image_url": "https://example.com/images/art-001.jpg",
-         "placement": "On the blank wall across from your bed - creates a focal point and add
- personality",
+         "placement": "On the blank wall across from your bed - creates a focal point and add personality",
          "dimensions": {
            "width": 40,
            "height": 60,
