@@ -4,6 +4,10 @@
     <h2>Payment Information</h2>
     <div class="form-section">
       <div class="form-group">
+        <label for="cardName">Cardholder's Name</label>
+        <input type="text" id="cardName" placeholder="Enter name" />
+      </div>
+      <div class="form-group">
         <label for="cardNumber">Credit Card Number</label>
         <input type="text" id="cardNumber" placeholder="Enter card number" />
       </div>
@@ -44,6 +48,7 @@
           document.getElementById('cardNumber').value = '4111 1111 1111 1111';
           document.getElementById('expDate').value = '12/25';
           document.getElementById('cvc').value = '123';
+          document.getElementById('cardName').value = 'Kirill Igumenshchev';
           document.getElementById('billingAddress').value = '123 Elm Street, Springfield, IL, 62704';
           document.getElementById('shippingAddress').value = '456 Oak Avenue, Springfield, IL, 62704';
         });
