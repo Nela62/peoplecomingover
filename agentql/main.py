@@ -27,24 +27,22 @@ async def main():
 
         form_query = """
         {
-            first_name
-            last_name
-            email
-            subject_of_inquiry
-            inquiry_text_box
-            submit_btn
+            cardName
+            cardNumber
+            expDate
+            cvc
+            billingAddress
+            shippingAddress
+            buy_now_btn
         }
         """
         response = await page.query_elements(form_query)
 
-        await response.first_name.fill(form_data["first_name"])
-        await response.last_name.fill(form_data["last_name"])
-        await response.email.fill(form_data["email"])
-        await response.subject_of_inquiry.select_option(label=form_data["subject_of_inquiry"])
-        await response.inquiry_text_box.fill(form_data["inquiry_text_box"])
+        for field, value in form_data.items():
+            await response[field].fill(value)
 
         # Submit the form
-        await response.submit_btn.click()
+        await response.buy_now_btn.click()
 
         # confirm form
         confirm_query = """
