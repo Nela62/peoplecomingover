@@ -31,6 +31,11 @@ import texture from '../assets/texture.webp';
 		<main class="content">
 			<slot />
 		</main>
+		<footer class="site-footer">
+			<div class="footer-container">
+				<p>&copy; {new Date().getFullYear()} Curated Quarters. All rights reserved.</p>
+			</div>
+		</footer>
 	</body>
 </html>
 
@@ -44,9 +49,14 @@ import texture from '../assets/texture.webp';
 	}
 
 	header {
-		background-color: #f9f9f9;
+		background-color: rgba(249, 249, 249, 0.95);
 		padding: 1rem 0;
-		border-bottom: 1px solid #eee;
+		border-bottom: 1px solid rgba(238, 238, 238, 0.5);
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(10px);
 	}
 
 	.header-container {
@@ -82,16 +92,38 @@ import texture from '../assets/texture.webp';
 		color: #666;
 	}
 
+	.site-nav a:hover {
+		color: #3245ff;
+		text-decoration: underline;
+		transition: color 0.2s ease;
+	}
+
 	.site-logo {
 		max-height: 50px;
 		margin-right: 1rem;
 	}
 
 	main.content {
-		background-color: rgba(255, 255, 255, 0.9);
+		background-color: rgba(255, 255, 255, 0.95);
 		margin: 2rem auto;
-		padding: 1rem;
+		padding: 2rem;
 		max-width: 1200px;
 		border-radius: 8px;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	footer.site-footer {
+		background-color: rgba(249, 249, 249, 0.95);
+		padding: 1rem 0;
+		border-top: 1px solid rgba(238, 238, 238, 0.5);
+		text-align: center;
+		font-size: 0.9rem;
+		color: #666;
+	}
+
+	.footer-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
 	}
 </style>
