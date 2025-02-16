@@ -37,7 +37,32 @@ export function ProductCard({
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-sm">
+      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-md">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="font-medium text-sm">{name}</h3>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M15 3h6v6" />
+              <path d="M10 14 21 3" />
+              <path d="M18 13v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" />
+            </svg>
+          </Button>
+        </div>
         <div className="aspect-square relative rounded-md overflow-hidden">
           <img
             src={image_url}
@@ -46,27 +71,17 @@ export function ProductCard({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <div className="flex justify-between items-center">
-            <h3 className="font-medium text-sm">{name}</h3>
+          <div className="flex justify-between items-center mt-2">
             <p className="font-medium">${price.toFixed(2)}</p>
+            <Button size="sm" onClick={handleOrder}>
+              Add to Cart
+            </Button>
           </div>
           {placement && (
-            <p className="text-sm text-muted-foreground italic">
+            <p className="text-sm text-muted-foreground italic mt-1">
               Placement: {placement}
             </p>
           )}
-          <div className="flex items-center justify-between mt-2 gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsModalOpen(true)}
-            >
-              View Details
-            </Button>
-            <Button size="sm" onClick={handleOrder}>
-              Order
-            </Button>
-          </div>
         </div>
       </div>
 
