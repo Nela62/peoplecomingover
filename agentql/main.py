@@ -5,7 +5,7 @@
 import asyncio
 
 from playwright.async_api import async_playwright
-
+import json
 import agentql
 
 # URL of the e-commerce website
@@ -22,6 +22,9 @@ async def main():
         page = await agentql.wrap_async(browser.new_page())
         await page.goto(URL)  # open the target URL
 
+        with open('mock_data.json', 'r') as f:
+            form_data = json.load(f)
+
         form_query = """
         {
             first_name
@@ -34,11 +37,11 @@ async def main():
         """
         response = await page.query_elements(form_query)
 
-        await response.first_name.fill("John")
-        await response.last_name.fill("Doe")
-        await response.email.fill("johndoe@agentql.com")
-        await response.subject_of_inquiry.select_option(label="Sales Inquiry")
-        await response.inquiry_text_box.fill("I want to learn more about AgentQL")
+        await response.first_name.fill(form_data["first_name"])
+        await response.last_name.fill(form_data["last_name"])
+        await response.email.fill(form_data["email"])
+        await response.subject_of_inquiry.select_option(label=form_data["subject_of_inquiry"])
+        await response.inquiry_text_box.fill(form_data["inquiry_text_box"])
 
         # Submit the form
         await response.submit_btn.click()
