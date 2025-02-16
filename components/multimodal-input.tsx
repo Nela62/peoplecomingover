@@ -12,6 +12,7 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
+import { Paperclip } from "lucide-react";
 
 import { cn, sanitizeUIMessages } from "@/lib/utils";
 
@@ -44,6 +45,8 @@ export function MultimodalInput({
   append,
   handleSubmit,
   className,
+  files,
+  setFiles,
 }: {
   chatId: string;
   input: string;
@@ -55,9 +58,19 @@ export function MultimodalInput({
   append: (message: Message) => Promise<string | null | undefined>;
   handleSubmit: (event?: { preventDefault?: () => void }) => void;
   className?: string;
+  files: File[];
+  setFiles: Dispatch<SetStateAction<File[]>>;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      // Convert FileList to an Array and update the state
+      setFiles(Array.from(e.target.files));
+    }
+  };
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -165,6 +178,23 @@ export function MultimodalInput({
             }
           }
         }}
+      />
+
+      <button
+        type="button"
+        className="absolute bottom-3 left-3"
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <Paperclip className="text-muted-foreground  hover:text-gray-700 h-5 w-5" />
+      </button>
+      {/* Hidden file input */}
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileChange}
       />
 
       {isLoading ? (

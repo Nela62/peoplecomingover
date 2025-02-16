@@ -21,31 +21,39 @@ export function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleSubmit = async (event?: { preventDefault?: () => void }) => {
     setIsLoading(true);
     const id = crypto.randomUUID();
-    setMessages((messages) => [
-      ...messages,
-      { id, role: "user", content: input },
-    ]);
+    const userMessage: Message = { id, role: "user", content: input };
+
+    // Update your messages state
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput("");
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: [...messages, { id, role: "user", content: input }],
-      }),
-    });
-    const data = await response.json();
-    console.log("data", data);
-    setMessages([
-      ...messages,
-      { id: crypto.randomUUID(), role: "assistant", content: data.content },
-    ]);
-    setIsLoading(false);
+
+    // Create FormData and append your messages and files
+    const formData = new FormData();
+    formData.append("messages", JSON.stringify(updatedMessages));
+    // Append each file (if any) with the same key (FastAPI will treat these as a list)
+    files.forEach((file) => formData.append("files", file));
+
+    try {
+      const response = await fetch("http://localhost:8000/api/chat", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      setMessages([
+        ...updatedMessages,
+        { id: crypto.randomUUID(), role: "assistant", content: data.content },
+      ]);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const append = (message: Message) => {
@@ -95,6 +103,8 @@ export function Chat() {
           messages={messages}
           setMessages={setMessages}
           append={append}
+          files={files}
+          setFiles={setFiles}
         />
       </form>
     </div>
