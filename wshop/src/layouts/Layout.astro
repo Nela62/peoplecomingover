@@ -14,7 +14,16 @@ import texture from '../assets/texture.webp';
 		<title>Curated Quarters</title>
 	</head>
 	<body style={`background: url(${texture.src}) no-repeat center center fixed; background-size: cover;`}>
-		<a href="#main-content" class="skip-link">Skip to main content – jump directly to the main area of this page</a>
+		<a
+			href="#main-content"
+			class="skip-link"
+			aria-describedby="skip-description"
+		>
+			Skip to main content – jump directly to the main area of this page
+		</a>
+		<p id="skip-description" class="visually-hidden">
+			Use this link to bypass repetitive navigation (header and menus) and go straight to the main content.
+		</p>
 		<header>
 			<div class="header-container">
 				<img src={logo.src} alt="Curated Quarters Logo" class="site-logo" />
@@ -26,13 +35,19 @@ import texture from '../assets/texture.webp';
 						<li><a href="/about">About Us</a></li>
 						<li><a href="/contact">Contact</a></li>
 					</ul>
+					<p class="visually-hidden">
+						Primary Navigation: Contains links to Home, Products, About Us, and Contact. Use Tab and Enter keys to activate these links.
+					</p>
 				</nav>
 			</div>
 		</header>
-		<main id="main-content" class="content" role="main">
+		<main id="main-content" class="content" role="main" aria-describedby="main-content-desc">
+			<div id="main-content-desc" class="visually-hidden">
+				You are now in the main content area. Use the keyboard for navigation: Tab to move, arrow keys to move within lists, and Enter to select an item. All interactive elements are clearly labeled.
+			</div>
 			<slot />
 		</main>
-		<footer class="site-footer">
+		<footer class="site-footer" role="contentinfo">
 			<div class="footer-container">
 				<p>&copy; {new Date().getFullYear()} Curated Quarters. All rights reserved.</p>
 			</div>
@@ -158,6 +173,17 @@ import texture from '../assets/texture.webp';
 	}
 	.skip-link:focus {
 		top: 0;
+	}
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 	html,
 	body {
