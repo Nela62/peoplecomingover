@@ -3,9 +3,10 @@
 """This is an example of how to collect pricing data from e-commerce website using AgentQL."""
 
 import asyncio
+import json
 
 from playwright.async_api import async_playwright
-import json
+
 import agentql
 
 # URL of the e-commerce website
@@ -22,7 +23,7 @@ async def main():
         page = await agentql.wrap_async(browser.new_page())
         await page.goto(URL)  # open the target URL
 
-        with open('mock_data.json', 'r') as f:
+        with open("mock_data.json", "r") as f:
             form_data = json.load(f)
 
         form_query = """
@@ -44,15 +45,6 @@ async def main():
         # Submit the form
         await response.buy_now_btn.click()
 
-        # confirm form
-        confirm_query = """
-        {
-            confirmation_btn
-        }
-        """
-
-        response = await page.query_elements(confirm_query)
-        await response.confirmation_btn.click()
         await page.wait_for_page_ready_state()
         await page.wait_for_timeout(3000)  # wait for 3 seconds
         print("Form submitted successfully!")
