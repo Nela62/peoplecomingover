@@ -10,20 +10,30 @@ from openai import OpenAI
 from .utils.prompt import ClientMessage, convert_to_openai_messages
 from .utils.tools import get_current_weather
 
-from fastapi.middleware.cors import CORSMiddleware
-
 
 from llama_index.llms.sambanovasystems import SambaNovaCloud
-from llama_index.core.base.llms.types import ChatMessage, MessageRole
+from llama_index.core.base.llms.types import (
+    ChatMessage,
+    MessageRole,
+    ImageBlock,
+    TextBlock,
+)
+
+from fastapi.middleware.cors import CORSMiddleware
+
+# Configure CORS
+origins = [
+    "http://localhost:3000",  # React app
+]
+
 
 # Instantiate the SambaNovaCloud model with the chosen model
 
 
 load_dotenv(".env.local")
 
-
 llm = SambaNovaCloud(
-    model="DeepSeek-R1-Distill-Llama-70B",
+    model="Llama-3.2-90B-Vision-Instruct",
     context_window=100000,
     max_tokens=1024,
     temperature=0.7,
@@ -37,14 +47,17 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-# client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url="")
+client = OpenAI(
+    base_url="https://api.sambanova.ai/v1",
+    api_key=os.environ.get("SAMBANOVA_API_KEY"),
+)
 
 
 class Request(BaseModel):
@@ -186,8 +199,7 @@ class ChatResponse(BaseModel):
 
 @app.post("/api/chat")
 async def handle_chat_data(
-    messages: str = Form(...),
-    files: Optional[List[UploadFile]] = File(None),
+    req: Request,
     protocol: str = Query("data"),
 ):
     # messages = request.messages
@@ -196,26 +208,40 @@ async def handle_chat_data(
     # response = StreamingResponse(stream_text(openai_messages, protocol))
     # response.headers["x-vercel-ai-data-stream"] = "v1"
     # return response
-    try:
-        messages_data = json.loads(messages)
-    except json.JSONDecodeError:
-        return JSONResponse(
-            status_code=400, content={"detail": "Invalid messages format"}
-        )
+    messages_data = req.messages
 
-    messages = []
+    # messages = []
+    # for msg in messages_data:
+    #     role_str = msg.get("role", "user").lower()
+    #     if role_str == "system":
+    #         role = MessageRole.SYSTEM
+    #     elif role_str == "assistant":
+    #         role = MessageRole.ASSISTANT
+    #     else:
+    #         role = MessageRole.USER
 
-    for msg in messages_data:
-        role_str = msg.get("role", "user").lower()
-        if role_str == "system":
-            role = MessageRole.SYSTEM
-        elif role_str == "assistant":
-            role = MessageRole.ASSISTANT
-        else:
-            role = MessageRole.USER
-        messages.append(ChatMessage(role=role, content=msg.get("content", "")))
+    #     content = msg.get("content", "")
+    #     messages.append(ChatMessage(role=role, content=content))
+    # # If content is a list, we assume it’s a list of blocks
+    # if isinstance(content, list):
+    #     blocks = []
+    #     for block in content:
+    #         block_type = block.get("type")
+    #         if block_type == "text":
+    #             blocks.append(TextBlock(text=block.get("text", "")))
+    #         elif block_type == "image_url":
+    #             # Assumes your client sends something like { type: "image_url", image_url: { name, url } }
+    #             image_data = block.get("image_url", {})
+    #             blocks.append(ImageBlock(url=image_data.get("url", "")))
+    #     messages.append(ChatMessage(role=role, blocks=blocks))
+    # else:
+    #     messages.append(ChatMessage(role=role, content=content))
+
+    response = client.chat.completions.create(
+        model="Llama-3.2-90B-Vision-Instruct", messages=messages_data
+    )
 
     # Use the SambaNova model to get a chat response
-    ai_msg = llm.chat(messages)
+    # ai_msg = llm.chat(messages)
     # return ChatResponse(answer=ai_msg.message.content)
-    return ChatResponse(role="assistant", content=ai_msg.message.content)
+    return ChatResponse(role="assistant", content=response.choices[0].message.content)

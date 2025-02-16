@@ -9,10 +9,26 @@ import { useChat } from "ai/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+type TextContent = {
+  type: "text";
+  text: string;
+};
+
+type ImageContent = {
+  type: "image_url";
+  image_url: {
+    name: string;
+    url: string;
+  };
+};
+
+type Content = TextContent | ImageContent;
+
 export type Message = {
   id: string;
   role: "user" | "assistant" | "system";
-  content: string;
+  content: string | Content[];
+  toolInvocations?: ToolInvocation[];
 };
 
 export function Chat() {
@@ -23,32 +39,79 @@ export function Chat() {
   const [input, setInput] = useState("");
   const [files, setFiles] = useState<File[]>([]);
 
+  function convertToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        if (base64String) {
+          resolve(base64String.toString());
+        } else {
+          reject(new Error("Failed to convert file to Base64."));
+        }
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
   const handleSubmit = async (event?: { preventDefault?: () => void }) => {
     setIsLoading(true);
     const id = crypto.randomUUID();
-    const userMessage: Message = { id, role: "user", content: input };
+    let userMessage: Message;
+    const base64Images: ImageContent[] = await Promise.all(
+      files.map(async (file) => {
+        const base64 = await convertToBase64(file);
+        return {
+          type: "image_url",
+          image_url: {
+            name: file.name,
+            url: base64,
+          },
+        };
+      })
+    );
+
+    if (files.length > 0) {
+      userMessage = {
+        id,
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: input,
+          },
+          ...base64Images,
+        ],
+      };
+    } else {
+      userMessage = { id, role: "user", content: input };
+    }
 
     // Update your messages state
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
     setInput("");
 
-    // Create FormData and append your messages and files
-    const formData = new FormData();
-    formData.append("messages", JSON.stringify(updatedMessages));
-    // Append each file (if any) with the same key (FastAPI will treat these as a list)
-    files.forEach((file) => formData.append("files", file));
-
     try {
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages: updatedMessages }),
       });
       const data = await response.json();
       setMessages([
         ...updatedMessages,
         { id: crypto.randomUUID(), role: "assistant", content: data.content },
       ]);
+      setFiles([]);
     } catch (error) {
       console.error("Error:", error);
     } finally {

@@ -9,6 +9,7 @@ import {
   useCallback,
   type Dispatch,
   type SetStateAction,
+  useState,
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
@@ -20,6 +21,7 @@ import { ArrowUpIcon, StopIcon } from "./icons";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Message } from "./chat";
+import { PreviewAttachment } from "./preview-attachment";
 
 const suggestedActions = [
   {
@@ -64,11 +66,19 @@ export function MultimodalInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [cachedFiles, setCachedFiles] = useState<
+    { name: string; url: string }[]
+  >([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      const newFiles = Array.from(e.target.files).map((file) => ({
+        name: file.name,
+        url: URL.createObjectURL(file),
+      }));
+      setCachedFiles((cachedFiles) => [...cachedFiles, ...newFiles]);
       // Convert FileList to an Array and update the state
-      setFiles(Array.from(e.target.files));
+      setFiles((files) => [...files, ...Array.from(e.target.files || [])]);
     }
   };
 
@@ -124,7 +134,7 @@ export function MultimodalInput({
 
   return (
     <div className="relative w-full flex flex-col gap-4">
-      {messages.length === 0 && (
+      {messages.length === 0 && files.length === 0 && (
         <div className="grid sm:grid-cols-2 gap-2 w-full">
           {suggestedActions.map((suggestedAction, index) => (
             <motion.div
@@ -152,6 +162,21 @@ export function MultimodalInput({
                 </span>
               </Button>
             </motion.div>
+          ))}
+        </div>
+      )}
+
+      {files.length > 0 && (
+        <div className="flex gap-2">
+          {cachedFiles.map((file) => (
+            <PreviewAttachment
+              key={file.name}
+              attachment={{
+                url: file.url,
+                contentType: "image/jpeg",
+                name: file.name,
+              }}
+            />
           ))}
         </div>
       )}

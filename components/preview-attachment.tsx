@@ -1,6 +1,12 @@
-import type { Attachment } from "ai";
+// import type { Attachment } from "ai";
 
 import { LoaderIcon } from "./icons";
+
+export type Attachment = {
+  name: string;
+  url: string;
+  contentType: string;
+};
 
 export const PreviewAttachment = ({
   attachment,

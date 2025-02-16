@@ -1,6 +1,5 @@
 "use client";
 
-import type { Message } from "ai";
 import { motion } from "framer-motion";
 
 import { SparklesIcon } from "./icons";
@@ -8,6 +7,7 @@ import { Markdown } from "./markdown";
 import { PreviewAttachment } from "./preview-attachment";
 import { cn } from "@/lib/utils";
 import { Weather } from "./weather";
+import { Message } from "./chat";
 
 export const PreviewMessage = ({
   message,
@@ -25,7 +25,7 @@ export const PreviewMessage = ({
     >
       <div
         className={cn(
-          "group-data-[role=user]/message:bg-primary group-data-[role=user]/message:text-primary-foreground flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl",
+          "group-data-[role=user]/message:bg-neutral-200  flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl"
         )}
       >
         {message.role === "assistant" && (
@@ -37,7 +37,14 @@ export const PreviewMessage = ({
         <div className="flex flex-col gap-2 w-full">
           {message.content && (
             <div className="flex flex-col gap-4">
-              <Markdown>{message.content as string}</Markdown>
+              <Markdown>
+                {Array.isArray(message.content)
+                  ? message.content
+                      .filter((content) => content.type === "text")
+                      .map((content) => content.text)
+                      .join("")
+                  : message.content}
+              </Markdown>
             </div>
           )}
 
@@ -73,14 +80,20 @@ export const PreviewMessage = ({
             </div>
           )}
 
-          {message.experimental_attachments && (
+          {message.content && Array.isArray(message.content) && (
             <div className="flex flex-row gap-2">
-              {message.experimental_attachments.map((attachment) => (
-                <PreviewAttachment
-                  key={attachment.url}
-                  attachment={attachment}
-                />
-              ))}
+              {message.content
+                .filter((content) => content.type === "image_url")
+                .map((attachment) => (
+                  <PreviewAttachment
+                    key={attachment.image_url.name}
+                    attachment={{
+                      name: attachment.image_url.name,
+                      url: attachment.image_url.url,
+                      contentType: "image/png",
+                    }}
+                  />
+                ))}
             </div>
           )}
         </div>
@@ -104,7 +117,7 @@ export const ThinkingMessage = () => {
           "flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl",
           {
             "group-data-[role=user]/message:bg-muted": true,
-          },
+          }
         )}
       >
         <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
