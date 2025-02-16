@@ -33,12 +33,12 @@ export function ProductCard({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOrder = () => {
-    toast.success(`${name} added to cart!`);
+    toast.success(`${name} ordered!`);
   };
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-sm">
+      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm  w-[350px]">
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-lg">{name}</h3>
           <Button
@@ -50,11 +50,11 @@ export function ProductCard({
             <Maximize2 size={16} />
           </Button>
         </div>
-        <div className="aspect-square relative rounded-md overflow-hidden">
+        <div className="relative rounded-md overflow-hidden w-[200px] h-[200px]">
           <img
             src={image_url}
             alt={`${name} image`}
-            className="object-cover w-full h-full"
+            className="object-fit w-full h-full"
           />
         </div>
         <div className="flex flex-col gap-1 mt-2">
