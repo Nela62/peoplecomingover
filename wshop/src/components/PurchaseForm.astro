@@ -53,6 +53,14 @@
           document.getElementById('shippingAddress').value = '456 Oak Avenue, Springfield, IL, 62704';
         });
       }
+
+      // Add form submission handler to redirect with a mock tracking number
+      const purchaseForm = document.querySelector('.purchase-form');
+      purchaseForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const trackingNumber = 'TRACK' + Math.floor(Math.random() * 900000 + 100000);
+        window.location.href = `/tracking?number=${trackingNumber}`;
+      });
     });
   </script>
 

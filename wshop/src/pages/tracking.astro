@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Read the tracking number from the URL query parameters
+const urlParams = new URLSearchParams(Astro.request.url.search);
+const trackingNumber = urlParams.get("number") || "TRACK000000";
+---
+<Layout>
+  <h1>Package Tracking Information</h1>
+  <section class="tracking-status">
+    <p>Your tracking number: <strong>{trackingNumber}</strong></p>
+    <div class="timeline">
+      <div class="stage completed">
+        <h2>Order Processed</h2>
+        <p>Your order has been processed and is now in our system.</p>
+        <span>Mar 20, 2025, 10:00 AM</span>
+      </div>
+      <div class="stage completed">
+        <h2>Picked Up</h2>
+        <p>Your package was picked up by our shipping partner.</p>
+        <span>Mar 21, 2025, 9:00 AM</span>
+      </div>
+      <div class="stage current">
+        <h2>In Transit</h2>
+        <p>Your package is on its way. It is moving between distribution centers.</p>
+        <span>Mar 21, 2025, 3:00 PM</span>
+      </div>
+      <div class="stage pending">
+        <h2>Out for Delivery</h2>
+        <p>Your package is scheduled for delivery today.</p>
+        <span>Mar 22, 2025, 8:00 AM (Scheduled)</span>
+      </div>
+      <div class="stage pending">
+        <h2>Delivered</h2>
+        <p>Your package will be delivered by the end of the day.</p>
+        <span>Estimated: Mar 22, 2025, 5:00 PM</span>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .tracking-status {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .tracking-status h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .stage {
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 4px solid #ccc;
+    }
+    .stage h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .stage p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .stage span {
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .stage.completed { border-color: #28a745; }
+    .stage.current { border-color: #ffc107; }
+    .stage.pending { border-color: #007bff; }
+  </style>
+</Layout>
