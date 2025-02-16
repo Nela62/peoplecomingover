@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 		<title>Curated Quarters</title>
 	</head>
 	<body>
@@ -31,11 +32,11 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
-		font-family: sans-serif;
+		font-family: 'Open Sans', sans-serif;
 	}
 
 	header {
-		background-color: #f8f8f8;
+		background-color: #f9f9f9;
 		padding: 1rem 0;
 		border-bottom: 1px solid #eee;
 	}
@@ -50,10 +51,12 @@
 	}
 
 	.site-title {
-		font-size: 1.5rem;
+		font-family: 'Playfair Display', serif;
+		font-size: 2rem;
 		font-weight: bold;
-		color: #333;
+		color: #222;
 		margin: 0;
+		letter-spacing: 0.05em;
 	}
 
 	.site-nav ul {
@@ -65,7 +68,9 @@
 	}
 
 	.site-nav a {
+		font-family: 'Lora', serif;
+		font-size: 1.1rem;
 		text-decoration: none;
-		color: #555;
+		color: #666;
 	}
 </style>

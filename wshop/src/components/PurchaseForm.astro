@@ -35,21 +35,22 @@
   </form>
 
 <style>
-    /* Purchase form styling */
     .purchase-form {
+      font-family: 'Lora', serif;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem; /* Increased gap */
+      gap: 2rem;
       max-width: 600px;
-      padding: 2rem;
-      border-radius: 8px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      font-family: sans-serif; /* Set a default font */
+      padding: 3rem;
+      border-radius: 12px;
+      background-color: #fefefe;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+      margin-top: 2rem;
     }
 
-    .form-section {
-      margin-bottom: 1.5rem; /* Space between sections */
+    .form-section.payment-info, .form-section.shipping-info {
+      margin-bottom: 1.5rem;
     }
 
     .form-section h2 {
@@ -59,24 +60,24 @@
     }
 
     .purchase-form .form-group {
+      font-size: 1rem;
+      color: #777;
       display: flex;
       flex-direction: column;
-      font-size: 0.9rem;
-      color: #555; /* Darker label color */
-      margin-bottom: 0.75rem; /* Slightly reduced spacing within groups */
+      margin-bottom: 0.75rem;
     }
 
     .purchase-form label {
-      font-weight: bold; /* Make labels a bit bolder */
-      margin-bottom: 0.3rem; /* Space between label and input */
+      font-weight: bold;
+      margin-bottom: 0.3rem;
     }
 
     .purchase-form input {
-      padding: 0.8rem; /* Slightly more padding */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem; /* Input text size */
-      color: #333; /* Input text color */
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
     }
 
     .purchase-form textarea {
@@ -85,36 +86,35 @@
       border-radius: 4px;
       font-size: 1rem;
       color: #333;
-      min-height: 80px; /* Minimum height for textarea */
+      min-height: 80px;
     }
-    .purchase-form button { /* Keep button styles as they are or adjust as needed */
-      padding: 0.75rem 1.5rem; /* Slightly increased padding */
-      font-size: 1rem; /* Slightly larger font size */
-    }
+
     .inline-group {
       display: flex;
-      gap: 1rem; /* Space between inline inputs */
-      align-items: start; /* Align items to the start to align labels nicely */
+      gap: 1rem;
+      align-items: start;
     }
     .inline-group > div {
-      display: flex; /* Ensure each inner div is also flex for label/input layout */
-      flex-direction: column; /* Stack label and input vertically within each */
-      flex: 1; /* Distribute space evenly */
-      min-width: 0; /* Allow shrinking if needed */
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
     }
 
     .purchase-form button {
-      padding: 0.85rem 1.75rem; /* Slightly increased padding */
-      font-size: 1rem; /* Slightly larger font size */
-      background-color: #3245ff; /* Vibrant button color */
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      background-color: #5588ff;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      letter-spacing: 0.03em;
     }
 
     .purchase-form button:hover {
-      background-color: #2235cc; /* Slightly darker shade on hover */
+      background-color: #3366dd;
     }
   </style>
