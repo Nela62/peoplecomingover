@@ -48,7 +48,7 @@ export function ProductCard({
         </div>
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex justify-between items-start">
-            <h3 className="font-medium text-lg">{name}</h3>
+            <h3 className="font-medium">{name}</h3>
             <Button
               variant="ghost"
               size="sm"
