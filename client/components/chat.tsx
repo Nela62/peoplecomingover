@@ -243,19 +243,118 @@ export function Chat() {
         assistantResponse = {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `The image shows a bedroom with a bed, desk, chair, and bookshelf. The room
- is small and cozy, with a single bed against one wall and a desk and chair against another.
- Bookshelf is located in the corner of the room, and a window with white curtains is visible
- the back wall.
+          content: `### Rating: 7.5/10
+The room has a clean, organized vibe, but a few small adjustments could make it more cozy and inviting.
 
- To improve the comfort and functionality of the room, here are some suggestions:\n 1. Add a comfortable reading chair near the bookshelf to create a cozy reading nook.\n2. Place a floor lamp beside the reading chair for soft lighting and a warm ambiance.\n3. Hang a piece of artwork or a framed print above the bed or desk to personalize the space.\n4. Add a plant on the desk or bookshelf for a refreshing touch of greenery.\n5. Use a comfortable throw blanket to add both warmth and texture to the room.`,
+### Strengths:
+1. **Cleanliness:** The room looks tidy, which is a big plus.
+2. **Functional Desk Setup:** The workstation is well-organized, which is ideal for work or study.
+3. **Neutral Color Palette:** The gray walls and white curtains offer a calm aesthetic.
+
+### Improvements:
+1. **Lighting:**
+   - Add a warm table lamp or fairy lights for softer lighting, making the space cozier and more romantic.
+   
+2. **Curtains:**
+   - Consider replacing the plain white curtains with textured or patterned ones to add personality.
+   - Alternatively, tie them back with curtain holders to let in more natural light during the day.
+
+3. **Decor:**
+   - Add some personal touches like framed pictures, wall art, or small plants to make the room feel more inviting.
+   - Place a small rug near the bed or desk to add warmth to the space.
+
+4. **Bed:**
+   - Upgrade the bedspread or add a throw blanket and some extra pillows for a cozier and more stylish look.
+
+5. **Air Conditioner:**
+   - Clean or conceal the pipe going to the AC for a more polished look.
+
+6. **Bookshelf:**
+   - Organize the books more aesthetically, maybe add a decorative item like a plant or a photo frame on one of the shelves.
+
+7. **Seating:**
+   - If space allows, consider adding a small chair or ottoman for extra seating.
+
+8. **Fragrance:**
+   - Use a subtle air freshener or scented candles to create a pleasant aroma.
+
+I suggest these items to make the room cozier and more inviting:`,
+          shopResponse: {
+            lighting: [
+              {
+                id: "lt-001",
+                name: "ROTTOGOON Floor Lamp",
+                description:
+                  "Warm, dimmable lighting that creates a cozy atmosphere",
+                price: 39.99,
+                image_url:
+                  "https://m.media-amazon.com/images/I/61pJwYkeP9L._AC_SL1001_.jpg",
+                placement:
+                  "Next to the accent chair - perfect for reading or creating ambient lighting",
+                color_options: ["Black/White Shade", "Brass/Beige Shade"],
+              },
+              {
+                id: "lt-002",
+                name: "Aooshine Table Lamp",
+                description:
+                  "The Aooshine minimalist bedside table lamp combines a sleek design, a soft linen shade for a warm glow, and safety-certified components, making it a versatile and stylish addition to any room.",
+                price: 9.99,
+                image_url:
+                  "https://m.media-amazon.com/images/I/61xxhaeUKIL._AC_SL1500_.jpg",
+                placement:
+                  "On the desk - perfect for reading or creating ambient lighting",
+                color_options: ["Black/White Shade", "Brass/Beige Shade"],
+              },
+            ],
+            curtains: [
+              {
+                id: "cu-001",
+                name: "Estelar Textiler Navy Blue and Greyish White Blackout Curtains",
+                description:
+                  "The Estelar Textiler Ombre Blackout Curtains combine a stylish gradient design with 100% blackout functionality, noise reduction, and thermal insulation, making them a perfect choice for any room in your home.",
+                price: 29.89,
+                image_url:
+                  "https://m.media-amazon.com/images/I/710JIZe0yOL._AC_SL1500_.jpg",
+                placement:
+                  "On the window - creates a focal point and adds a touch of elegance",
+                color_options: ["White", "Gray", "Black"],
+              },
+            ],
+            decor: [
+              {
+                id: "de-001",
+                name: "Der Rose Set of 6 Succulents Plants",
+                description:
+                  "The Der Rose 6-piece artificial succulent set features realistic, low-maintenance faux plants in durable white pots, perfect for adding a touch of natural beauty to any indoor space.",
+                price: 9.99,
+                image_url:
+                  "https://m.media-amazon.com/images/I/71-V-N2TpoL._AC_SL1500_.jpg",
+                placement: "On the desk",
+              },
+            ],
+          },
         };
       } else if (input.toLowerCase().includes("art")) {
         assistantResponse = {
           id: crypto.randomUUID(),
           role: "assistant",
           content:
-            "I recommend 'The Artist's Garden at Giverny' by Claude Monet. This masterpiece captures the serene beauty of Monet's garden with vibrant colors and impressionistic style. It would add a peaceful atmosphere to your room. The price is $450 for a high-quality reproduction.",
+            "I recommend 'The Artist's Garden at Giverny' by Claude Monet. This masterpiece captures the serene beauty of Monet's garden with vibrant colors and impressionistic style. It would add a peaceful atmosphere to your room. The price is $53 for a high-quality reproduction.",
+          shopResponse: {
+            art: [
+              {
+                id: "art-001",
+                name: "The Artist's Garden at Giverny by Claude Monet",
+                description:
+                  "A masterpiece capturing the serene beauty of Monet's garden with vibrant colors and impressionistic style. Dimensions: 36 x 24 inches",
+                placement:
+                  "Above the bed - creates a focal point and adds a touch of elegance",
+                price: 53,
+                image_url:
+                  "https://www.claude-monet.com/assets/img/paintings/the-artists-garden-at-giverny.jpg",
+              },
+            ],
+          },
         };
       } else if (input.toLowerCase().includes("buy")) {
         assistantResponse = {
@@ -314,13 +413,13 @@ export function Chat() {
     useScrollToBottom<HTMLDivElement>();
 
   return (
-    <div className="flex flex-col min-w-0 h-[calc(100dvh-52px)] bg-background">
+    <div className="flex flex-col min-w-0 h-screen bg-background">
       <div
         ref={messagesContainerRef}
         className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
       >
         {messages.length === 0 && (
-          <div className="w-full grow mx-auto max-w-3xl px-4 flex flex-col gap-2 justify-center items-center">
+          <div className="w-full grow mx-auto max-w-4xl px-4 flex flex-col gap-2 justify-center items-center">
             <p className="text-center text-2xl">Have people coming over?</p>
             <p className="text-center text-xl text-muted-foreground">
               Drop the image of your room and we&apos;ll tell you how to improve
@@ -348,7 +447,7 @@ export function Chat() {
         />
       </div>
 
-      <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">
+      <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-4xl">
         <MultimodalInput
           chatId={chatId}
           input={input}
