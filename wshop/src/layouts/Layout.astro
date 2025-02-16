@@ -14,11 +14,12 @@ import texture from '../assets/texture.webp';
 		<title>Curated Quarters</title>
 	</head>
 	<body style={`background: url(${texture.src}) no-repeat center center fixed; background-size: cover;`}>
+		<a href="#main-content" class="skip-link">Skip to main content – jump directly to the main area of this page</a>
 		<header>
 			<div class="header-container">
 				<img src={logo.src} alt="Curated Quarters Logo" class="site-logo" />
 				<h1 class="site-title">Curated Quarters</h1>
-				<nav class="site-nav">
+				<nav class="site-nav" aria-label="Primary Navigation">
 					<ul>
 						<li><a href="/">Home</a></li>
 						<li><a href="/products">Products</a></li>
@@ -28,7 +29,7 @@ import texture from '../assets/texture.webp';
 				</nav>
 			</div>
 		</header>
-		<main class="content">
+		<main id="main-content" class="content" role="main">
 			<slot />
 		</main>
 		<footer class="site-footer">
@@ -143,6 +144,21 @@ import texture from '../assets/texture.webp';
 </html>
 
 <style>
+	/* Skip link styling */
+	.skip-link {
+		position: absolute;
+		top: -40px;
+		left: 0;
+		background: #000;
+		color: #fff;
+		padding: 8px 16px;
+		z-index: 100;
+		text-decoration: none;
+		transition: top 0.3s ease;
+	}
+	.skip-link:focus {
+		top: 0;
+	}
 	html,
 	body {
 		margin: 0;
