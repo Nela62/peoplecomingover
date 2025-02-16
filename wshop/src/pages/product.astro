@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PurchaseForm from '../components/PurchaseForm.astro';
+import productImage from '../assets/monet-garden.jpg';
+---
+<Layout>
+  <!-- Breadcrumbs and title -->
+  <nav class="breadcrumbs">
+    <a href="/">Home</a> &gt; <a href="/products">Products</a> &gt; Monet Garden
+  </nav>
+  <h1>The Artist's Garden at Giverny (1900)</h1>
+
+  <!-- Product image with modal zoom -->
+  <div class="product-image">
+    <img id="productImg" src={productImage.src} alt="Monet Garden Product" role="button" tabindex="0" aria-label="Click to zoom in on the product image" />
+  </div>
+  <div id="zoomModal" class="modal">
+    <span class="close" role="button" tabindex="0" aria-label="Close zoomed image modal">&times;</span>
+    <img id="modalImg" class="modal-content" alt="Zoomed Product" />
+  </div>
+
+  <div class="product-description">
+    <p>Capture the beauty of Claude Monet's "The Artist's Garden at Giverny (1900)" with this stunning piece. Painted in 1900, this oil on canvas masterpiece, currently housed in the Musée d'Orsay in Paris, showcases Monet's iconic garden in Giverny.</p>
+    <p>Rows of vibrant purple and pink irises stretch diagonally across the canvas, bathed in the dappled sunlight filtering through the trees, hinting at Monet's home in the background. This painting is a beautiful example of Monet's late-career exploration of his beloved garden, where "subject, sensation and pictorial object have all but become identical."</p>
+    <p>Bring the serenity and color of Monet's Giverny into your space with this exquisite artwork.</p>
+    <p>This is a hand-painted reproduction on canvas, capturing the original painting's dimensions of 32.1 inches by 36.5 inches.</p>
+  </div>
+
+  <PurchaseForm />
+
+  <!-- Inline script for image zoom functionality -->
+  <script>
+    const productImg = document.getElementById('productImg');
+    const modal = document.getElementById('zoomModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModal = document.querySelector('.close');
+
+    productImg.addEventListener('click', () => {
+      modal.style.display = 'block';
+      modalImg.src = productImg.src;
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #555;
+      margin: 0;
+      padding: 0;
+      background-color: #fefefe;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main {
+      max-width: 1200px;
+      padding: 3rem 2rem;
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      border-radius: 12px;
+      width: 95%;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+      letter-spacing: 0.05em;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #888;
+      text-align: center;
+    }
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #5588ff;
+    }
+
+    .product-image {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .product-image img {
+      max-width: 100%;
+      cursor: zoom-in;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      margin: 3% auto;
+      display: block;
+      max-width: 95%;
+      max-height: 95%;
+      border-radius: 12px;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 50px;
+      font-weight: lighter;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .product-description {
+      max-width: 800px;
+      margin: 3rem auto;
+      line-height: 1.8;
+      color: #666;
+      padding: 1.5rem 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+    .product-description p {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</Layout>

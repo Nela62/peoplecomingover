@@ -1,0 +1,150 @@
+---
+---
+<form class="purchase-form">
+    <h2>Payment Information</h2>
+    <div class="form-section">
+      <div class="form-group">
+        <label for="cardName">Cardholder's Name</label>
+        <input type="text" id="cardName" placeholder="Enter name" aria-label="Cardholder's Name" />
+      </div>
+      <div class="form-group">
+        <label for="cardNumber">Credit Card Number</label>
+        <input type="text" id="cardNumber" placeholder="Enter card number" aria-label="Credit Card Number" />
+      </div>
+      <div class="form-group inline-group">
+        <div>
+          <label for="expDate">Expiration Date</label>
+          <input type="text" id="expDate" placeholder="MM/YY" aria-label="Expiration Date" />
+        </div>
+        <div>
+          <label for="cvc">CVC</label>
+          <input type="text" id="cvc" placeholder="CVC" aria-label="CVC" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>Shipping Address</h2>
+      <div class="form-group">
+        <label for="billingAddress">Billing Address</label>
+        <textarea id="billingAddress" placeholder="Street Address, City, State, Zip" aria-label="Billing Address"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="shippingAddress">Shipping Address</label>
+        <textarea id="shippingAddress" placeholder="Street Address, City, State, Zip" aria-label="Shipping Address"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" aria-label="Submit Purchase Order">Buy Now</button>
+    <button type="button" id="mockFillButton" aria-label="Fill form with test data">Fill Mock Data</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mockFillButton = document.getElementById('mockFillButton');
+
+      if (mockFillButton) {
+        mockFillButton.addEventListener('click', () => {
+          document.getElementById('cardNumber').value = '4111 1111 1111 1111';
+          document.getElementById('expDate').value = '12/25';
+          document.getElementById('cvc').value = '123';
+          document.getElementById('cardName').value = 'Kirill Igumenshchev';
+          document.getElementById('billingAddress').value = '123 Elm Street, Springfield, IL, 62704';
+          document.getElementById('shippingAddress').value = '456 Oak Avenue, Springfield, IL, 62704';
+        });
+      }
+
+      // Add form submission handler to redirect with a mock tracking number
+      const purchaseForm = document.querySelector('.purchase-form');
+      purchaseForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const trackingNumber = 'TRACK' + Math.floor(Math.random() * 900000 + 100000);
+        window.location.href = `/tracking?number=${trackingNumber}`;
+      });
+    });
+  </script>
+
+<style>
+    .purchase-form {
+      font-family: 'Lora', serif;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 600px;
+      padding: 3rem;
+      border-radius: 12px;
+      background-color: #fefefe;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+      margin-top: 2rem;
+    }
+
+    .form-section.payment-info, .form-section.shipping-info {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .purchase-form .form-group {
+      font-size: 1rem;
+      color: #777;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0.75rem;
+    }
+
+    .purchase-form label {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+
+    .purchase-form input {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .purchase-form textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #333;
+      min-height: 80px;
+    }
+
+    .inline-group {
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+    }
+    .inline-group > div {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .purchase-form button {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      background-color: #5588ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .purchase-form button:hover {
+      background-color: #3366dd;
+    }
+  </style>
