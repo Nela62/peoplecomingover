@@ -319,6 +319,13 @@ export function Chat() {
         ref={messagesContainerRef}
         className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
       >
+        {messages.length === 0 && (
+          <div className="w-full mx-auto max-w-3xl px-4">
+            <div className="text-center text-lg text-muted-foreground">
+              Drop your room and we'll tell you how to improve it!
+            </div>
+          </div>
+        )}
 
         {messages.map((message, index) => (
           <PreviewMessage
