@@ -320,10 +320,12 @@ export function Chat() {
         className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
       >
         {messages.length === 0 && (
-          <div className="w-full mx-auto max-w-3xl px-4">
-            <div className="text-center text-lg text-muted-foreground">
-              Drop your room and we'll tell you how to improve it!
-            </div>
+          <div className="w-full grow mx-auto max-w-3xl px-4 flex flex-col gap-2 justify-center items-center">
+            <p className="text-center text-2xl">Have people coming over?</p>
+            <p className="text-center text-xl text-muted-foreground">
+              Drop the image of your room and we&apos;ll tell you how to improve
+              it!
+            </p>
           </div>
         )}
 
