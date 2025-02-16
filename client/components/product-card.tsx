@@ -38,37 +38,37 @@ export function ProductCard({
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm  w-[350px]">
-        <div className="flex justify-between items-center">
-          <h3 className="font-medium text-lg">{name}</h3>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0"
-            onClick={() => setIsModalOpen(true)}
-          >
-            <Maximize2 size={16} />
-          </Button>
-        </div>
-        <div className="relative rounded-md overflow-hidden w-[200px] h-[200px]">
+      <div className="flex flex-row gap-4 p-4 rounded-xl border bg-card text-card-foreground shadow-sm max-w-md">
+        <div className="relative rounded-md overflow-hidden w-[200px] h-[200px] shrink-0">
           <img
             src={image_url}
             alt={`${name} image`}
-            className="object-fit w-full h-full"
+            className="object-cover w-full h-full"
           />
         </div>
-        <div className="flex flex-col gap-1 mt-2">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="font-medium mt-1">${price.toFixed(2)}</p>
-            </div>
-            <Button onClick={handleOrder}>Buy</Button>
+        <div className="flex flex-col gap-2 flex-1">
+          <div className="flex justify-between items-start">
+            <h3 className="font-medium text-lg">{name}</h3>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Maximize2 size={16} />
+            </Button>
           </div>
-          {placement && (
-            <p className="text-sm text-muted-foreground italic mt-1">
-              Placement: {placement}
-            </p>
-          )}
+          <div className="flex flex-col gap-2 mt-auto">
+            <div className="flex justify-between items-center">
+              <p className="font-medium">${price.toFixed(2)}</p>
+              <Button onClick={handleOrder}>Buy</Button>
+            </div>
+            {placement && (
+              <p className="text-sm text-muted-foreground italic">
+                Placement: {placement}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
