@@ -37,7 +37,7 @@ export function ProductCard({
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-md">
+      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-lg">
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-medium text-sm">{name}</h3>
           <Button
