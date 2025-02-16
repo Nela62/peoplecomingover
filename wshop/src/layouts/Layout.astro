@@ -1,3 +1,8 @@
+---
+import logo from '../assets/logo.png';
+import texture from '../assets/texture.webp';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -8,9 +13,10 @@
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 		<title>Curated Quarters</title>
 	</head>
-	<body>
+	<body style={`background: url(${texture.src}) no-repeat center center fixed; background-size: cover;`}>
 		<header>
 			<div class="header-container">
+				<img src={logo.src} alt="Curated Quarters Logo" class="site-logo" />
 				<h1 class="site-title">Curated Quarters</h1>
 				<nav class="site-nav">
 					<ul>
@@ -72,5 +78,10 @@
 		font-size: 1.1rem;
 		text-decoration: none;
 		color: #666;
+	}
+
+	.site-logo {
+		max-height: 50px;
+		margin-right: 1rem;
 	}
 </style>
