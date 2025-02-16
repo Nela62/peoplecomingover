@@ -38,6 +38,8 @@
     <button type="submit" aria-label="Submit Purchase Order">Buy Now</button>
     <button type="button" id="mockFillButton" aria-label="Fill form with test data">Fill Mock Data</button>
   </form>
+  
+  <div id="tracking-link-container" style="margin-top: 1rem;"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -59,7 +61,8 @@
       purchaseForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const trackingNumber = 'TRACK' + Math.floor(Math.random() * 900000 + 100000);
-        window.location.href = `/tracking?number=${trackingNumber}`;
+        const trackingLinkContainer = document.getElementById('tracking-link-container');
+        trackingLinkContainer.innerHTML = `Your order has been processed. Track your package <a href="/tracking?number=${trackingNumber}" aria-label="Tracking Information">here</a>.`;
       });
     });
   </script>
