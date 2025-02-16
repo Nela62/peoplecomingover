@@ -55,8 +55,7 @@ app.add_middleware(
 
 
 client = OpenAI(
-    base_url="https://api.sambanova.ai/v1",
-    api_key=os.environ.get("SAMBANOVA_API_KEY"),
+    base_url="https://api.sambanova.ai/v1", api_key=os.environ.get("SAMBANOVA_API_KEY")
 )
 
 
@@ -237,9 +236,16 @@ async def handle_chat_data(
     # else:
     #     messages.append(ChatMessage(role=role, content=content))
 
+    # TODO: add structured output here to output both the assistant's response and the parameters for the tool call - store search
+    # TODO: It's erroring out when I add the system message
+    system_message = "The user will post a picture of their room. Rate their room as if their girlfriend or their friends is coming over and they don't want to embarrass her. Do not mention the girlfriend, just mention what the user should add / remove, include any types of furniture worth buying. You can mention any mismatched furniture that the user should get rid of and get something new instead. Give the room a rating out of 10."
+
     response = client.chat.completions.create(
-        model="Llama-3.2-90B-Vision-Instruct", messages=messages_data
+        model="Llama-3.2-90B-Vision-Instruct",
+        messages=messages_data,
     )
+
+    print("response", response)
 
     # Use the SambaNova model to get a chat response
     # ai_msg = llm.chat(messages)

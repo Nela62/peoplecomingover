@@ -97,6 +97,7 @@ export function Chat() {
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
     setInput("");
+    setFiles([]);
 
     try {
       const response = await fetch("http://localhost:8000/api/chat", {
@@ -111,7 +112,6 @@ export function Chat() {
         ...updatedMessages,
         { id: crypto.randomUUID(), role: "assistant", content: data.content },
       ]);
-      setFiles([]);
     } catch (error) {
       console.error("Error:", error);
     } finally {
