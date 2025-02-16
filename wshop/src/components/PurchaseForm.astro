@@ -5,20 +5,20 @@
     <div class="form-section">
       <div class="form-group">
         <label for="cardName">Cardholder's Name</label>
-        <input type="text" id="cardName" placeholder="Enter name" />
+        <input type="text" id="cardName" placeholder="Enter name" aria-label="Cardholder's Name" />
       </div>
       <div class="form-group">
         <label for="cardNumber">Credit Card Number</label>
-        <input type="text" id="cardNumber" placeholder="Enter card number" />
+        <input type="text" id="cardNumber" placeholder="Enter card number" aria-label="Credit Card Number" />
       </div>
       <div class="form-group inline-group">
         <div>
           <label for="expDate">Expiration Date</label>
-          <input type="text" id="expDate" placeholder="MM/YY" />
+          <input type="text" id="expDate" placeholder="MM/YY" aria-label="Expiration Date" />
         </div>
         <div>
           <label for="cvc">CVC</label>
-          <input type="text" id="cvc" placeholder="CVC" />
+          <input type="text" id="cvc" placeholder="CVC" aria-label="CVC" />
         </div>
       </div>
     </div>
@@ -27,16 +27,16 @@
       <h2>Shipping Address</h2>
       <div class="form-group">
         <label for="billingAddress">Billing Address</label>
-        <textarea id="billingAddress" placeholder="Street Address, City, State, Zip"></textarea>
+        <textarea id="billingAddress" placeholder="Street Address, City, State, Zip" aria-label="Billing Address"></textarea>
       </div>
       <div class="form-group">
         <label for="shippingAddress">Shipping Address</label>
-        <textarea id="shippingAddress" placeholder="Street Address, City, State, Zip"></textarea>
+        <textarea id="shippingAddress" placeholder="Street Address, City, State, Zip" aria-label="Shipping Address"></textarea>
       </div>
     </div>
 
-    <button type="submit">Buy Now</button>
-    <button type="button" id="mockFillButton">Fill Mock Data</button>
+    <button type="submit" aria-label="Submit Purchase Order">Buy Now</button>
+    <button type="button" id="mockFillButton" aria-label="Fill form with test data">Fill Mock Data</button>
   </form>
 
   <script>

@@ -12,10 +12,10 @@ import productImage from '../assets/monet-garden.jpg';
 
   <!-- Product image with modal zoom -->
   <div class="product-image">
-    <img id="productImg" src={productImage.src} alt="Monet Garden Product" />
+    <img id="productImg" src={productImage.src} alt="Monet Garden Product" role="button" tabindex="0" aria-label="Click to zoom in on the product image" />
   </div>
   <div id="zoomModal" class="modal">
-    <span class="close">&times;</span>
+    <span class="close" role="button" tabindex="0" aria-label="Close zoomed image modal">&times;</span>
     <img id="modalImg" class="modal-content" alt="Zoomed Product" />
   </div>
 
