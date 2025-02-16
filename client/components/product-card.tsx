@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Modal } from "./ui/modal";
 import { toast } from "sonner";
+import { Maximize2 } from "lucide-react";
 
 interface ProductCardProps {
   name: string;
@@ -37,47 +38,31 @@ export function ProductCard({
 
   return (
     <>
-      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-2xl">
-        <div className="flex justify-end">
+      <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card text-card-foreground shadow-sm w-full max-w-sm">
+        <div className="flex justify-between items-center">
+          <h3 className="font-medium text-lg">{name}</h3>
           <Button
             variant="ghost"
             size="sm"
             className="h-8 w-8 p-0"
             onClick={() => setIsModalOpen(true)}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M15 3h6v6" />
-              <path d="M10 14 21 3" />
-              <path d="M18 13v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" />
-            </svg>
+            <Maximize2 size={16} />
           </Button>
         </div>
         <div className="aspect-square relative rounded-md overflow-hidden">
           <img
             src={image_url}
-            alt={name}
+            alt={`${name} image`}
             className="object-cover w-full h-full"
           />
         </div>
         <div className="flex flex-col gap-1 mt-2">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="font-medium text-sm">{name}</h3>
               <p className="font-medium mt-1">${price.toFixed(2)}</p>
             </div>
-            <Button size="sm" onClick={handleOrder}>
-              Add to Cart
-            </Button>
+            <Button onClick={handleOrder}>Buy</Button>
           </div>
           {placement && (
             <p className="text-sm text-muted-foreground italic mt-1">
@@ -129,7 +114,7 @@ export function ProductCard({
               </div>
             )}
             <Button onClick={handleOrder} className="mt-2">
-              Add to Cart
+              Buy
             </Button>
           </div>
         </div>

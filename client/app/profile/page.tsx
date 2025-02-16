@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useStytchUser } from "@stytch/nextjs";
-import Profile from "@/client/components/Profile";
+import Profile from "@/components/Profile";
 
 export default function ProfilePage() {
   const { user, isInitialized } = useStytchUser();

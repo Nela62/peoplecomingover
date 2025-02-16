@@ -51,13 +51,13 @@ export const PreviewMessage = ({
 
           {message.shopResponse && (
             <div className="flex flex-col gap-6 mt-4">
-              {Object.entries(message.shopResponse.recommendations).map(
+              {Object.entries(message.shopResponse).map(
                 ([category, products]) => (
                   <div key={category} className="flex flex-col gap-4">
                     <h3 className="text-lg font-semibold capitalize">
                       {category.replace(/_/g, " ")}
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="flex flex-row flex-wrap gap-4 w-full">
                       {products.map((product) => (
                         <ProductCard key={product.id} {...product} />
                       ))}
