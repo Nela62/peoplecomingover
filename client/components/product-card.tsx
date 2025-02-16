@@ -30,7 +30,7 @@ export function ProductCard({
   dimensions,
 }: ProductCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const handleOrder = () => {
     toast.success(`${name} added to cart!`);
   };
@@ -56,7 +56,11 @@ export function ProductCard({
             </p>
           )}
           <div className="flex items-center justify-between mt-2 gap-2">
-            <Button variant="outline" size="sm" onClick={() => setIsModalOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(true)}
+            >
               View Details
             </Button>
             <Button size="sm" onClick={handleOrder}>
