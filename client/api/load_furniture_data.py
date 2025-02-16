@@ -38,11 +38,11 @@ furniture_data = {
         "A masterpiece capturing the serene beauty of Monet's garden with vibrant colors and impressionistic style"
     ],
     'image_url': [
-        'https://example.com/images/lamp-001.jpg',
-        'https://example.com/images/lights-002.jpg',
-        'https://example.com/images/art-001.jpg',
-        'https://example.com/images/hamper-001.jpg',
-        'https://example.com/images/chair-001.jpg',
+        'https://m.media-amazon.com/images/I/61pJwYkeP9L._AC_SL1001_.jpg',
+        'https://m.media-amazon.com/images/I/81wGn2TQJeL._AC_SL1500_.jpg',
+        'https://m.media-amazon.com/images/I/91qqiXudI0L._AC_SL1500_.jpg',
+        'https://m.media-amazon.com/images/I/71-jCUaVwKL._AC_SL1500_.jpg',
+        'https://m.media-amazon.com/images/I/81KuAZKVGKL._AC_SL1500_.jpg',
         'https://www.claude-monet.com/assets/img/paintings/the-artists-garden-at-giverny.jpg'
     ],
     'placement': [

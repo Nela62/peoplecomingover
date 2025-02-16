@@ -85,7 +85,7 @@ const sampleMessages: Message[] = [
           description:
             "Crisp, hotel-quality cotton bedding that feels luxurious and looks sharp. Perfect for creating that put-together look.",
           price: 189.99,
-          image_url: "https://example.com/images/bedding-001.jpg",
+          image_url: "https://m.media-amazon.com/images/I/71jyYnK2pZL._AC_SL1500_.jpg",
           placement:
             "On your bed - the white will brighten the room and look clean and fresh",
           // available_sizes: ["Twin", "Full", "Queen", "King"],
@@ -99,7 +99,7 @@ const sampleMessages: Message[] = [
           description:
             "Comfortable yet stylish chair that provides extra seating without taking up too much space",
           price: 299.99,
-          image_url: "https://example.com/images/chair-001.jpg",
+          image_url: "https://m.media-amazon.com/images/I/81KuAZKVGKL._AC_SL1500_.jpg",
           placement:
             "In the corner near the window - creates a nice reading nook and gives guests a place to sit",
           dimensions: {
@@ -117,7 +117,7 @@ const sampleMessages: Message[] = [
           name: "Floor Lamp with Fabric Shade",
           description: "Warm, dimmable lighting that creates a cozy atmosphere",
           price: 129.99,
-          image_url: "https://example.com/images/lamp-001.jpg",
+          image_url: "https://m.media-amazon.com/images/I/61pJwYkeP9L._AC_SL1001_.jpg",
           placement:
             "Next to the accent chair - perfect for reading or creating ambient lighting",
           color_options: ["Black/White Shade", "Brass/Beige Shade"],
@@ -127,7 +127,7 @@ const sampleMessages: Message[] = [
           name: "String Lights",
           description: "Warm white LED string lights to add a magical touch",
           price: 29.99,
-          image_url: "https://example.com/images/lights-002.jpg",
+          image_url: "https://m.media-amazon.com/images/I/81wGn2TQJeL._AC_SL1500_.jpg",
           placement:
             "Along the headboard or window - creates a warm, inviting atmosphere",
         },
@@ -139,7 +139,7 @@ const sampleMessages: Message[] = [
           description:
             "Set of 3 coordinating abstract prints that add color and interest",
           price: 159.99,
-          image_url: "https://example.com/images/art-001.jpg",
+          image_url: "https://m.media-amazon.com/images/I/91qqiXudI0L._AC_SL1500_.jpg",
           placement:
             "On the blank wall across from your bed - creates a focal point and add personality",
           dimensions: {
@@ -155,7 +155,7 @@ const sampleMessages: Message[] = [
           name: "Sleek Hamper with Lid",
           description: "Modern hamper that keeps laundry out of sight",
           price: 45.99,
-          image_url: "https://example.com/images/hamper-001.jpg",
+          image_url: "https://m.media-amazon.com/images/I/71-jCUaVwKL._AC_SL1500_.jpg",
           placement: "In the corner near your closet",
           color_options: ["White", "Gray", "Black"],
         },
