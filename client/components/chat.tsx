@@ -2,7 +2,6 @@
 
 import { PreviewMessage, ThinkingMessage } from "@/components/message";
 import { MultimodalInput } from "@/components/multimodal-input";
-import { Overview } from "@/components/overview";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { ToolInvocation } from "ai";
 import { useChat } from "ai/react";
@@ -320,7 +319,6 @@ export function Chat() {
         ref={messagesContainerRef}
         className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
       >
-        {messages.length === 0 && <Overview />}
 
         {messages.map((message, index) => (
           <PreviewMessage
