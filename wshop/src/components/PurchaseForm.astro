@@ -94,10 +94,13 @@
     .inline-group {
       display: flex;
       gap: 1rem; /* Space between inline inputs */
-      align-items: flex-start; /* Align items to the start to align labels nicely */
+      align-items: start; /* Align items to the start to align labels nicely */
     }
-    .inline-group > div input {
-      max-width: 150px; /* Limit max width of expDate and CVC inputs */
+    .inline-group > div {
+      display: flex; /* Ensure each inner div is also flex for label/input layout */
+      flex-direction: column; /* Stack label and input vertically within each */
+      flex: 1; /* Distribute space evenly */
+      min-width: 0; /* Allow shrinking if needed */
     }
 
     .purchase-form button {
