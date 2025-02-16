@@ -22,6 +22,32 @@ type ImageContent = {
   };
 };
 
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  placement?: string;
+  color_options?: string[];
+  dimensions?: {
+    width: number;
+    height: number;
+    depth?: number;
+    unit: string;
+  };
+};
+
+type ShopResponse = {
+  analysis: {
+    text: string;
+    cleanup_tasks: string[];
+  };
+  recommendations: {
+    [category: string]: Product[];
+  };
+};
+
 type Content = TextContent | ImageContent;
 
 export type Message = {
@@ -29,6 +55,7 @@ export type Message = {
   role: "user" | "assistant" | "system";
   content: string | Content[];
   toolInvocations?: ToolInvocation[];
+  shopResponse?: ShopResponse;
 };
 
 export const isTextContent = (content: Content): content is TextContent =>
