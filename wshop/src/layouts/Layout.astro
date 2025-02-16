@@ -28,7 +28,9 @@ import texture from '../assets/texture.webp';
 				</nav>
 			</div>
 		</header>
-		<slot />
+		<main class="content">
+			<slot />
+		</main>
 	</body>
 </html>
 
@@ -83,5 +85,13 @@ import texture from '../assets/texture.webp';
 	.site-logo {
 		max-height: 50px;
 		margin-right: 1rem;
+	}
+
+	main.content {
+		background-color: rgba(255, 255, 255, 0.9);
+		margin: 2rem auto;
+		padding: 1rem;
+		max-width: 1200px;
+		border-radius: 8px;
 	}
 </style>
