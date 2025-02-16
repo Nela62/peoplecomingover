@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import productImage from '../assets/monet-garden.jpg';
+---
+<Layout>
+  <!-- Breadcrumbs and title -->
+  <nav class="breadcrumbs">
+    <a href="/">Home</a> &gt; <a href="/products">Products</a> &gt; Monet Garden
+  </nav>
+  <h1>Monet Garden</h1>
+
+  <!-- Product image with modal zoom -->
+  <div class="product-image">
+    <img id="productImg" src={productImage.src} alt="Monet Garden Product" />
+  </div>
+  <div id="zoomModal" class="modal">
+    <span class="close">&times;</span>
+    <img id="modalImg" class="modal-content" alt="Zoomed Product" />
+  </div>
+
+  <!-- Purchase form mockup -->
+  <form class="purchase-form">
+    <h2>Buy Now</h2>
+    <label>
+      Credit Card Number:
+      <input type="text" placeholder="1234 5678 9012 3456" />
+    </label>
+    <label>
+      Expiration Date:
+      <input type="text" placeholder="MM/YY" />
+    </label>
+    <label>
+      CVC:
+      <input type="text" placeholder="123" />
+    </label>
+    <label>
+      Billing Address:
+      <input type="text" placeholder="Street, City, State, Zip" />
+    </label>
+    <label>
+      Shipping Address:
+      <input type="text" placeholder="Street, City, State, Zip" />
+    </label>
+    <button type="submit">Buy Now</button>
+  </form>
+
+  <!-- Inline script for image zoom functionality -->
+  <script>
+    const productImg = document.getElementById('productImg');
+    const modal = document.getElementById('zoomModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModal = document.querySelector('.close');
+
+    productImg.addEventListener('click', () => {
+      modal.style.display = 'block';
+      modalImg.src = productImg.src;
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+
+  <!-- Inline styles for this page -->
+  <style>
+    /* Breadcrumb styling */
+    .breadcrumbs {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #3245ff;
+    }
+
+    /* Product image styling */
+    .product-image img {
+      max-width: 100%;
+      cursor: zoom-in;
+      /* Typical product-page size */
+      width: 600px;
+      height: auto;
+    }
+
+    /* Modal styling for zoom-in effect */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Purchase form styling */
+    .purchase-form {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+    }
+    .purchase-form label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .purchase-form input {
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .purchase-form button {
+      width: fit-content;
+      padding: 0.75rem 1.5rem;
+      background-color: #3245ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
+</Layout>
