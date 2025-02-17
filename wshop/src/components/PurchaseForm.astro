@@ -62,7 +62,14 @@
         event.preventDefault();
         const trackingNumber = 'TRACK' + Math.floor(Math.random() * 900000 + 100000);
         const trackingLinkContainer = document.getElementById('tracking-link-container');
-        trackingLinkContainer.innerHTML = `Your order has been processed. Tracking Information: <a href="/tracking?number=${trackingNumber}" aria-label="Tracking Information">/tracking?number=${trackingNumber}</a>.`;
+        trackingLinkContainer.innerHTML = `
+     Your order has been processed. Tracking Information: 
+     <a href="/tracking?number=${trackingNumber}" aria-label="Tracking Information">
+       /tracking?number=${trackingNumber}
+     </a>.
+     <br/><br/>
+     <iframe src="/tracking?number=${trackingNumber}" style="width: 100%; height: 600px; border: none;"></iframe>
+   `;
       });
     });
   </script>
