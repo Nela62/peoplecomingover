@@ -52,8 +52,9 @@ async def main():
         response = await page.query_elements("{delivery_date}")
         print("response: ", response)
         print("response.delivery_date: ", response.delivery_date)
+        delivery_date = await response.delivery_date.text_content()
         result = {
-            "delivery_date": response.delivery_date,
+            "delivery_date": delivery_date.strip(),
             "product": "artists_garden_at_giverny_monet",
         }
         return result
