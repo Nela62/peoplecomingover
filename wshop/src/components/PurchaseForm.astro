@@ -71,21 +71,39 @@
      <div id="tracking-content">Loading tracking information...</div>
    `;
    
-        try {
-          const response = await fetch(`/tracking?number=${trackingNumber}`);
-          const text = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(text, 'text/html');
-          // Extract the tracking section from the fetched page
-          const trackingSection = doc.querySelector('section.tracking-status');
-          if (trackingSection) {
-            document.getElementById('tracking-content').innerHTML = trackingSection.innerHTML;
-          } else {
-            document.getElementById('tracking-content').innerHTML = 'Tracking information could not be loaded.';
-          }
-        } catch (error) {
-          document.getElementById('tracking-content').innerHTML = 'Error loading tracking information.';
-        }
+        // Directly embed the tracking information without an external fetch
+        document.getElementById('tracking-content').innerHTML = `
+          <section class="tracking-status">
+            <p>Your tracking number: <strong>${trackingNumber}</strong></p>
+            <div class="timeline">
+              <div class="stage completed">
+                <h2>Order Processed</h2>
+                <p>Your order has been processed and is now in our system.</p>
+                <span>Mar 20, 2025, 10:00 AM</span>
+              </div>
+              <div class="stage completed">
+                <h2>Picked Up</h2>
+                <p>Your package was picked up by our shipping partner.</p>
+                <span>Mar 21, 2025, 9:00 AM</span>
+              </div>
+              <div class="stage current">
+                <h2>In Transit</h2>
+                <p>Your package is on its way.</p>
+                <span>Mar 21, 2025, 3:00 PM</span>
+              </div>
+              <div class="stage pending">
+                <h2>Out for Delivery</h2>
+                <p>Your package is scheduled for delivery today.</p>
+                <span>Mar 22, 2025, 8:00 AM (Scheduled)</span>
+              </div>
+              <div class="stage pending">
+                <h2>Delivered</h2>
+                <p>Your package will be delivered by the end of the day.</p>
+                <span>Estimated: Mar 22, 2025, 5:00 PM</span>
+              </div>
+            </div>
+          </section>
+        `;
       });
     });
   </script>
