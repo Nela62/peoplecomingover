@@ -50,8 +50,6 @@ async def main():
         await page.wait_for_page_ready_state()
         await page.wait_for_timeout(300)  # wait for 3 seconds
         response = await page.query_elements("{delivery_date}")
-        print("response: ", response)
-        print("response.delivery_date: ", response.delivery_date)
         delivery_date = (await response.delivery_date.text_content()) or ""
         result = {
             "delivery_date": delivery_date.strip(),
