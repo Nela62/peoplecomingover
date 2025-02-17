@@ -23,7 +23,8 @@ async def main(mock_data):
         # to toggle headless, change the value of headless to True or False
         # or use command line arguments, e.g. python main.py --headless=False
         # or use environment variables, e.g. HEADLESS=False python main.py
-        headless=False
+        headless=True
+        # headless=False
     ) as browser:
         # Create a new page in the browser and wrap it to get access to the AgentQL's querying API
         page = await agentql.wrap_async(browser.new_page())
