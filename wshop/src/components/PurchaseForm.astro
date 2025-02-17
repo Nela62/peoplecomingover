@@ -38,6 +38,8 @@
     <button type="submit" aria-label="Submit Purchase Order">Buy Now</button>
     <button type="button" id="mockFillButton" aria-label="Fill form with test data">Fill Mock Data</button>
   </form>
+  
+  <div id="tracking-link-container" style="margin-top: 1rem;"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -56,10 +58,34 @@
 
       // Add form submission handler to redirect with a mock tracking number
       const purchaseForm = document.querySelector('.purchase-form');
-      purchaseForm.addEventListener('submit', (event) => {
+      purchaseForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const trackingNumber = 'TRACK' + Math.floor(Math.random() * 900000 + 100000);
-        window.location.href = `/tracking?number=${trackingNumber}`;
+        const trackingLinkContainer = document.getElementById('tracking-link-container');
+        trackingLinkContainer.innerHTML = `
+     Your order has been processed. Tracking Information: 
+     <a href="/tracking?number=${trackingNumber}" aria-label="Tracking Information">
+       /tracking?number=${trackingNumber}
+     </a>.
+     <br/><br/>
+     <div id="tracking-content">Loading tracking information...</div>
+   `;
+   
+        try {
+          const response = await fetch(`/tracking?number=${trackingNumber}`);
+          const text = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(text, 'text/html');
+          // Extract the tracking section from the fetched page
+          const trackingSection = doc.querySelector('section.tracking-status');
+          if (trackingSection) {
+            document.getElementById('tracking-content').innerHTML = trackingSection.innerHTML;
+          } else {
+            document.getElementById('tracking-content').innerHTML = 'Tracking information could not be loaded.';
+          }
+        } catch (error) {
+          document.getElementById('tracking-content').innerHTML = 'Error loading tracking information.';
+        }
       });
     });
   </script>
