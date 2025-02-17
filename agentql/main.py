@@ -15,7 +15,7 @@ import agentql
 URL = "https://wshop-spring-water-7013.fly.dev/"
 
 
-async def main():
+async def main(mock_data):
     """Main function."""
     async with async_playwright() as playwright, await playwright.chromium.launch(
         # set headless to False to see the browser UI, useful for debugging and demo
@@ -49,9 +49,6 @@ async def main():
         """
         response = await page.query_elements(form_query)
 
-        # Load mock data from json file
-        with open("mock_data.json", "r") as f:
-            mock_data = json.load(f)
         await response.cardName.fill(mock_data["cardName"])
         await response.cardNumber.fill(mock_data["cardNumber"])
         await response.expDate.fill(mock_data["expDate"])
@@ -74,5 +71,9 @@ async def main():
 
 
 if __name__ == "__main__":
-    result = asyncio.run(main())
+    # Load mock data from json file
+    with open("mock_data.json", "r") as f:
+        mock_data = json.load(f)
+
+    result = asyncio.run(main(mock_data))
     print(json.dumps(result))
