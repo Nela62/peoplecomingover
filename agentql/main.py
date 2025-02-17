@@ -72,7 +72,7 @@ async def main(mock_data):
 
 if __name__ == "__main__":
     # Load mock data from json file
-    with open("mock_data.json", "r") as f:
+    with open("../mock_data.json", "r") as f:
         mock_data = json.load(f)
 
     result = asyncio.run(main(mock_data))
