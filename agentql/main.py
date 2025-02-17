@@ -50,7 +50,7 @@ async def main():
         await page.wait_for_page_ready_state()
         await page.wait_for_timeout(300)  # wait for 3 seconds
         response = await page.query_elements("{delivery_date}")
-        print(f"Delivery date: {response.delivery_date.text}")
+        print(f"Delivery date: {response.delivery_date}")
         print("Form submitted successfully!")
 
 
