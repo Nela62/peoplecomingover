@@ -50,9 +50,13 @@ async def main():
         await page.wait_for_page_ready_state()
         await page.wait_for_timeout(300)  # wait for 3 seconds
         response = await page.query_elements("{delivery_date}")
-        print(f"Delivery date: {response.delivery_date}")
-        print("Form submitted successfully!")
+        result = {
+            "delivery_date": response.delivery_date,
+            "message": "Form submitted successfully!"
+        }
+        return result
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    result = asyncio.run(main())
+    print(json.dumps(result))
