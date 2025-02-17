@@ -31,22 +31,16 @@ async def main(mock_data):
         await page.goto(URL)  # open the target URL
 
         form_query = """
-        fragment PurchaseForm on Form {
-            cardName
-            cardNumber
-            expDate
-            cvc
-            {
-                cardName
-                cardNumber
-                expDate
-                cvc
-                billingAddress
-                shippingAddress
-                buy_now_btn
-                delivery_date
-            }
-        }
+{
+    cardName
+    cardNumber
+    expDate
+    cvc
+    billingAddress
+    shippingAddress
+    buy_now_btn
+    delivery_date
+}
         """
         response = await page.query_elements(form_query)
 
