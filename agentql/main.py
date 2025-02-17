@@ -18,6 +18,11 @@ URL = "https://wshop-spring-water-7013.fly.dev/"
 async def main():
     """Main function."""
     async with async_playwright() as playwright, await playwright.chromium.launch(
+        # set headless to False to see the browser UI, useful for debugging and demo
+        # set headless to True to run in the background, useful for automation
+        # to toggle headless, change the value of headless to True or False
+        # or use command line arguments, e.g. python main.py --headless=False
+        # or use environment variables, e.g. HEADLESS=False python main.py
         headless=False
     ) as browser:
         # Create a new page in the browser and wrap it to get access to the AgentQL's querying API
@@ -25,24 +30,34 @@ async def main():
         await page.goto(URL)  # open the target URL
 
         form_query = """
-        {
+        fragment PurchaseForm on Form {
             cardName
             cardNumber
             expDate
             cvc
-            billingAddress
-            shippingAddress
-            buy_now_btn
-            delivery_date
+            {
+                cardName
+                cardNumber
+                expDate
+                cvc
+                billingAddress
+                shippingAddress
+                buy_now_btn
+                delivery_date
+            }
         }
         """
         response = await page.query_elements(form_query)
-        await response.cardName.fill("Kirill Igumenshchev")
-        await response.cardNumber.fill("4111 1111 1111 1111")
-        await response.expDate.fill("12/25")
-        await response.cvc.fill("123")
-        await response.billingAddress.fill("123 Elm Street, Springfield, IL, 62704")
-        await response.shippingAddress.fill("456 Oak Avenue, Springfield, IL, 62704")
+
+        # Load mock data from json file
+        with open("mock_data.json", "r") as f:
+            mock_data = json.load(f)
+        await response.cardName.fill(mock_data["cardName"])
+        await response.cardNumber.fill(mock_data["cardNumber"])
+        await response.expDate.fill(mock_data["expDate"])
+        await response.cvc.fill(mock_data["cvc"])
+        await response.billingAddress.fill(mock_data["billingAddress"])
+        await response.shippingAddress.fill(mock_data["shippingAddress"])
 
         # response = await page.query_elements(confirm_query)
         await response.buy_now_btn.click()
