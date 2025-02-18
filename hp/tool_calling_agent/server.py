@@ -19,11 +19,12 @@ from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import tools_condition
 from langgraph.types import Command
 from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 from pydantic import BaseModel
 from starlette.responses import StreamingResponse
 
 
-async def fill_payment():
+def fill_payment():
     """
     fill_payment is a tool that fills the payment form on an e-commerce website and orders the product.
     It fills in a name, credit card info, billing address, and shipping address. Then it buys the product. Then it returns the delivery date.
@@ -31,7 +32,8 @@ async def fill_payment():
     # URL of the e-commerce website
     # You can replace it with any other e-commerce website but the queries should be updated accordingly
     store_url = "https://wshop-spring-water-7013.fly.dev/"
-    async with async_playwright() as playwright, await playwright.chromium.launch(
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(
         # set headless to False to see the browser UI, useful for debugging and demo
         # set headless to True to run in the background, useful for automation
         # to toggle headless, change the value of headless to True or False
@@ -41,8 +43,8 @@ async def fill_payment():
         # headless=False
     ) as browser:
         # Create a new page in the browser and wrap it to get access to the AgentQL's querying API
-        page = await agentql.wrap_async(browser.new_page())
-        await page.goto(store_url)  # open the target URL
+        page = agentql.wrap(browser.new_page())
+        page.goto(store_url)  # open the target URL
 
         form_query = """
 {
@@ -56,22 +58,22 @@ async def fill_payment():
     delivery_date
 }
         """
-        response = await page.query_elements(form_query)
+        response = page.query_elements(form_query)
 
-        await response.cardName.fill("Kirill Igumenshchev")
-        await response.cardNumber.fill("4111 1111 1111 1111")
-        await response.expDate.fill("12/25")
-        await response.cvc.fill("123")
-        await response.billingAddress.fill("123 Elm Street, Springfield, IL, 62704")
-        await response.shippingAddress.fill("456 Oak Avenue, Springfield, IL, 62704")
+        response.cardName.fill("Kirill Igumenshchev")
+        response.cardNumber.fill("4111 1111 1111 1111")
+        response.expDate.fill("12/25")
+        response.cvc.fill("123")
+        response.billingAddress.fill("123 Elm Street, Springfield, IL, 62704")
+        response.shippingAddress.fill("456 Oak Avenue, Springfield, IL, 62704")
 
-        # response = await page.query_elements(confirm_query)
-        await response.buy_now_btn.click()
+        # response = page.query_elements(confirm_query)
+        response.buy_now_btn.click()
 
-        await page.wait_for_page_ready_state()
-        await page.wait_for_timeout(300)  # wait for 3 seconds
-        response = await page.query_elements("{delivery_date}")
-        delivery_date = (await response.delivery_date.text_content()) or ""
+        page.wait_for_page_ready_state()
+        page.wait_for_timeout(300)  # wait for 3 seconds
+        response = page.query_elements("{delivery_date}")
+        delivery_date = response.delivery_date.text_content() or ""
         # result = {
         #     "delivery_date": delivery_date.strip(),
         #     "product": "artists_garden_at_giverny_monet",
