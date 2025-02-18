@@ -9,7 +9,7 @@ from typing import Optional
 import agentql
 import uvicorn
 from fastapi import FastAPI
-from hyperpocket.tool import from_git
+from hyperpocket.tool import from_git, function_tool
 from hyperpocket_langgraph import PocketLanggraph
 from langchain_core.messages import SystemMessage
 from langchain_core.runnables import RunnableConfig
@@ -24,6 +24,7 @@ from pydantic import BaseModel
 from starlette.responses import StreamingResponse
 
 
+@function_tool
 def fill_payment():
     """
     fill_payment is a tool that fills the payment form on an e-commerce website and orders the product.
