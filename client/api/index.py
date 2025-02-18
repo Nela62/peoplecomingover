@@ -249,15 +249,16 @@ async def handle_chat_data(
     #     messages=messages_data,
     # )
 
-    adb_client = ApertureDBVectorStore(dimensions=1536)
-    storage_context = StorageContext.from_defaults(vector_store=adb_client)
+    # adb_client = ApertureDBVectorStore(dimensions=1536)
+    # storage_context = StorageContext.from_defaults(vector_store=adb_client)
 
-    documents = SimpleDirectoryReader("data").load_data()
-    index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
+    # documents = SimpleDirectoryReader("data").load_data()
+    # index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
 
-    query_engine = index.as_query_engine()
+    # query_engine = index.as_query_engine()
 
-    # Use the SambaNova model to get a chat response
-    ai_msg = llm.chat(messages)
-    return ChatResponse(answer=ai_msg.message.content)
+    # # Use the SambaNova model to get a chat response
+    # ai_msg = llm.chat(messages)
+    # return ChatResponse(answer=ai_msg.message.content)
+    return ChatResponse(role="assistant", content="Hello")
     # return ChatResponse(role="assistant", content=response.choices[0].message.content)
