@@ -63,3 +63,17 @@ how to setup hybrid rag and more about its benefits
 ## What's next for people-coming-over
 
 raise a bunch of money and free people from azamon, reddit, and shopify
+
+# notes
+
+## hyperpocket
+
+```
+cd hp
+uv init
+uv remove hyperpocket
+uv remove hyperpocket-langgraph
+uv add hyperpocket-langgraph hyperpocket
+uv run python tool_calling_agent/server.py
+
+```
