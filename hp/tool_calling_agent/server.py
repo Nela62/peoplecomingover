@@ -35,11 +35,6 @@ def fill_payment():
     store_url = "https://wshop-spring-water-7013.fly.dev/"
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
-            # set headless to False to see the browser UI, useful for debugging and demo
-            # set headless to True to run in the background, useful for automation
-            # to toggle headless, change the value of headless to True or False
-            # or use command line arguments, e.g. python main.py --headless=False
-            # or use environment variables, e.g. HEADLESS=False python main.py
             headless=True
             # headless=False
         )
@@ -86,13 +81,6 @@ def build():
     pocket = PocketLanggraph(
         tools=[
             fill_payment,
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/get-message",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/slack/post-message",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/linear/get-issues",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-events",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/get-calendar-list",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/google/insert-calendar-events",
-            # "https://github.com/vessl-ai/hyperpocket/tree/main/tools/github/list-pull-requests",
         ]
     )
 
