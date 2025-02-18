@@ -34,14 +34,14 @@ def fill_payment():
     store_url = "https://wshop-spring-water-7013.fly.dev/"
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
-        # set headless to False to see the browser UI, useful for debugging and demo
-        # set headless to True to run in the background, useful for automation
-        # to toggle headless, change the value of headless to True or False
-        # or use command line arguments, e.g. python main.py --headless=False
-        # or use environment variables, e.g. HEADLESS=False python main.py
-        headless=True
-        # headless=False
-    ) as browser:
+            # set headless to False to see the browser UI, useful for debugging and demo
+            # set headless to True to run in the background, useful for automation
+            # to toggle headless, change the value of headless to True or False
+            # or use command line arguments, e.g. python main.py --headless=False
+            # or use environment variables, e.g. HEADLESS=False python main.py
+            headless=True
+            # headless=False
+        )
         # Create a new page in the browser and wrap it to get access to the AgentQL's querying API
         page = agentql.wrap(browser.new_page())
         page.goto(store_url)  # open the target URL
