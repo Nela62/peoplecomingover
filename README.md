@@ -1,3 +1,9 @@
+Submittion page: https://devpost.com/software/people-coming-over
+
+demo video https://www.youtube.com/watch?v=u6nUgXjBMuo
+
+mock webstore we built so we didn't have to deal with 2-factor auth of amazon https://wshop-spring-water-7013.fly.dev/
+
 ## Inspiration
 
 ai is changing how we solve problems.
